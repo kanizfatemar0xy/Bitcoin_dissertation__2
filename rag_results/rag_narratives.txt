@@ -1,0 +1,225 @@
+
+==============================================================
+HIGH VOLATILITY EVENT — 2022-11-10
+==============================================================
+
+QUANTITATIVE ANALYSIS:
+  Date              : 2022-11-10
+  Bitcoin Price     : $17,586.77
+  Daily Return      : +10.74%
+  7-Day Volatility  : 8.4602%  (above 90th percentile)
+  Tweet Sentiment   : -0.1289  (negative)
+  News Sentiment    : +0.0000   (negative)
+
+SHAP — KEY DRIVERS:
+  Top features contributing to this volatility spike:
+  • Return_Std7
+  • Close_MA30
+  • Close_Lag7
+  • Volatility_30d
+  • Volume_MA7
+
+RETRIEVED CONTEXT:
+  News articles (+-3 days)      : 5
+  Tweet records (+-3 days)      : 5
+  Avg News Sentiment (window)   : +0.0433
+  Avg Tweet Sentiment (window)  : -0.1381
+
+NARRATIVE EXPLANATION:
+  On 2022-11-10, Bitcoin experienced elevated volatility of 8.46%.
+  The price increased by 10.74%, closing at $17,586.77.
+
+  SHAP analysis identified Return_Std7 (7-day return standard
+  deviation) as the dominant driver, indicating that accumulated
+  price instability was the strongest predictor of this spike.
+
+  Social media sentiment was negative (-0.129) on this day,
+  reflecting investor anxiety and negative market sentiment.
+
+  News sentiment was negative (+0.000),
+  indicating cautious or negative media coverage around this period.
+
+  [BULL EVENT] High volatility with positive return suggests a strong rally, potentially driven by positive news catalysts or FOMO from social media.
+==============================================================
+
+
+
+==============================================================
+HIGH VOLATILITY EVENT — 2022-11-14
+==============================================================
+
+QUANTITATIVE ANALYSIS:
+  Date              : 2022-11-14
+  Bitcoin Price     : $16,618.20
+  Daily Return      : +1.62%
+  7-Day Volatility  : 8.0660%  (above 90th percentile)
+  Tweet Sentiment   : +0.0124  (positive)
+  News Sentiment    : +0.0200   (positive)
+
+SHAP — KEY DRIVERS:
+  Top features contributing to this volatility spike:
+  • Return_Std7
+  • Close_MA30
+  • Close_Lag7
+  • Volatility_30d
+  • Volume_MA7
+
+RETRIEVED CONTEXT:
+  News articles (+-3 days)      : 5
+  Tweet records (+-3 days)      : 5
+  Avg News Sentiment (window)   : +0.0096
+  Avg Tweet Sentiment (window)  : -0.1870
+
+NARRATIVE EXPLANATION:
+  On 2022-11-14, Bitcoin experienced elevated volatility of 8.07%.
+  The price increased by 1.62%, closing at $16,618.20.
+
+  SHAP analysis identified Return_Std7 (7-day return standard
+  deviation) as the dominant driver, indicating that accumulated
+  price instability was the strongest predictor of this spike.
+
+  Social media sentiment was positive (+0.012) on this day,
+  suggesting market optimism despite the volatility.
+
+  News sentiment was positive (+0.020),
+  indicating positive coverage which may have amplified buying pressure.
+
+  [BULL EVENT] High volatility with positive return suggests a strong rally, potentially driven by positive news catalysts or FOMO from social media.
+==============================================================
+
+
+
+==============================================================
+HIGH VOLATILITY EVENT — 2022-06-19
+==============================================================
+
+QUANTITATIVE ANALYSIS:
+  Date              : 2022-06-19
+  Bitcoin Price     : $20,553.27
+  Daily Return      : +8.07%
+  7-Day Volatility  : 8.0431%  (above 90th percentile)
+  Tweet Sentiment   : +0.3179  (positive)
+  News Sentiment    : +0.1192   (positive)
+
+SHAP — KEY DRIVERS:
+  Top features contributing to this volatility spike:
+  • Return_Std7
+  • Close_MA30
+  • Close_Lag7
+  • Volatility_30d
+  • Volume_MA7
+
+RETRIEVED CONTEXT:
+  News articles (+-3 days)      : 5
+  Tweet records (+-3 days)      : 5
+  Avg News Sentiment (window)   : +0.0351
+  Avg Tweet Sentiment (window)  : +0.0254
+
+NARRATIVE EXPLANATION:
+  On 2022-06-19, Bitcoin experienced elevated volatility of 8.04%.
+  The price increased by 8.07%, closing at $20,553.27.
+
+  SHAP analysis identified Return_Std7 (7-day return standard
+  deviation) as the dominant driver, indicating that accumulated
+  price instability was the strongest predictor of this spike.
+
+  Social media sentiment was positive (+0.318) on this day,
+  suggesting market optimism despite the volatility.
+
+  News sentiment was positive (+0.119),
+  indicating positive coverage which may have amplified buying pressure.
+
+  [BULL EVENT] High volatility with positive return suggests a strong rally, potentially driven by positive news catalysts or FOMO from social media.
+==============================================================
+
+
+
+==============================================================
+HIGH VOLATILITY EVENT — 2022-11-11
+==============================================================
+
+QUANTITATIVE ANALYSIS:
+  Date              : 2022-11-11
+  Bitcoin Price     : $17,034.29
+  Daily Return      : -3.14%
+  7-Day Volatility  : 7.9947%  (above 90th percentile)
+  Tweet Sentiment   : -0.2072  (negative)
+  News Sentiment    : +0.0018   (positive)
+
+SHAP — KEY DRIVERS:
+  Top features contributing to this volatility spike:
+  • Return_Std7
+  • Close_MA30
+  • Close_Lag7
+  • Volatility_30d
+  • Volume_MA7
+
+RETRIEVED CONTEXT:
+  News articles (+-3 days)      : 5
+  Tweet records (+-3 days)      : 5
+  Avg News Sentiment (window)   : +0.0285
+  Avg Tweet Sentiment (window)  : -0.2234
+
+NARRATIVE EXPLANATION:
+  On 2022-11-11, Bitcoin experienced elevated volatility of 7.99%.
+  The price decreased by 3.14%, closing at $17,034.29.
+
+  SHAP analysis identified Return_Std7 (7-day return standard
+  deviation) as the dominant driver, indicating that accumulated
+  price instability was the strongest predictor of this spike.
+
+  Social media sentiment was negative (-0.207) on this day,
+  reflecting investor anxiety and negative market sentiment.
+
+  News sentiment was positive (+0.002),
+  indicating positive coverage which may have amplified buying pressure.
+
+  [BEAR EVENT] High volatility with negative return suggests a sell-off, potentially triggered by negative news, FUD, or liquidation cascade.
+==============================================================
+
+
+
+==============================================================
+HIGH VOLATILITY EVENT — 2022-11-12
+==============================================================
+
+QUANTITATIVE ANALYSIS:
+  Date              : 2022-11-12
+  Bitcoin Price     : $16,799.19
+  Daily Return      : -1.38%
+  7-Day Volatility  : 7.8871%  (above 90th percentile)
+  Tweet Sentiment   : -0.6616  (negative)
+  News Sentiment    : -0.0580   (negative)
+
+SHAP — KEY DRIVERS:
+  Top features contributing to this volatility spike:
+  • Return_Std7
+  • Close_MA30
+  • Close_Lag7
+  • Volatility_30d
+  • Volume_MA7
+
+RETRIEVED CONTEXT:
+  News articles (+-3 days)      : 5
+  Tweet records (+-3 days)      : 5
+  Avg News Sentiment (window)   : +0.0229
+  Avg Tweet Sentiment (window)  : -0.2463
+
+NARRATIVE EXPLANATION:
+  On 2022-11-12, Bitcoin experienced elevated volatility of 7.89%.
+  The price decreased by 1.38%, closing at $16,799.19.
+
+  SHAP analysis identified Return_Std7 (7-day return standard
+  deviation) as the dominant driver, indicating that accumulated
+  price instability was the strongest predictor of this spike.
+
+  Social media sentiment was negative (-0.662) on this day,
+  reflecting investor anxiety and negative market sentiment.
+
+  News sentiment was negative (-0.058),
+  indicating cautious or negative media coverage around this period.
+
+  [BEAR EVENT] High volatility with negative return suggests a sell-off, potentially triggered by negative news, FUD, or liquidation cascade.
+==============================================================
+
+
