@@ -180,7 +180,7 @@ The November 2022 cluster corresponds to the **FTX exchange collapse**. 5 out of
 
 ### Deep Learning Did Not Achieve Good Results
 
-This was expected, not a bug. LSTM and Neural Network models require a large number of training samples — typically 1,000 or more — to learn meaningful temporal patterns. Our master dataset contained only **343 training rows**, which is far too small. This limitation arose directly from the narrow overlap window between all three datasets (Dec 2021 to Feb 2023).
+This was expected, not a bug. LSTM and Neural Network models require a large number of training samples — typically 1,000 or more  to learn meaningful temporal patterns. Our master dataset contained only **343 training rows**, which is far too small. This limitation arose directly from the narrow overlap window between all three datasets (Dec 2021 to Feb 2023).
 
 The result is actually a valid research finding: for small financial time-series datasets, traditional ML models such as SVR and Gradient Boosting significantly outperform deep learning architectures.
 
@@ -188,7 +188,7 @@ The result is actually a valid research finding: for small financial time-series
 
 ### Separate Model Training Per Dataset Was Not Possible
 
-The three datasets could not be used to train three separate models because the **target variable** (`Volatility_7d`) only exists in the price dataset. The tweets file and news file contain only input features — they have no output variable to predict. Supervised learning requires both features and a target in the same table, so merging all three files by date was the only valid approach.
+The three datasets could not be used to train three separate models because the **target variable** (`Volatility_7d`) only exists in the price dataset. The tweets file and news file contain only input features  they have no output variable to predict. Supervised learning requires both features and a target in the same table, so merging all three files by date was the only valid approach.
 
 ---
 
@@ -345,7 +345,7 @@ SHAP was applied using `TreeExplainer` for tree models and `KernelExplainer` for
 
 Key findings:
 - `Return_Std7` is the dominant predictor with SHAP value 40x higher than the next feature
-- `Tweet_Sentiment_Lag3` ranks 7th — confirming a 3-day delayed sentiment effect on volatility
+- `Tweet_Sentiment_Lag3` ranks 7th  confirming a 3-day delayed sentiment effect on volatility
 - Price-based features dominate the top 6 ranks, confirming that market behavior is primarily self-referential
 
 ---
@@ -358,7 +358,7 @@ Each narrative covers:
 - Top SHAP features driving the prediction
 - Retrieved news and tweet context from ±3 days
 - Plain-language explanation classifying the event as Bull Spike or Bear Crash
-- Sentiment alignment check — whether sentiment agreed with price direction
+- Sentiment alignment check  whether sentiment agreed with price direction
 
 ---
 
@@ -384,7 +384,7 @@ Twitter sentiment is a stronger predictor of daily returns than news sentiment, 
 | Sentiment Impact | Tweet_Sentiment_Lag3 is the top sentiment feature — 3-day delayed market reaction |
 | Twitter vs News | Twitter r=0.195 vs News r=0.026 for daily return correlation |
 | Sentiment Alignment | 50% of top 10 high-volatility events showed sentiment aligned with price direction |
-| Biggest Event | FTX collapse November 2022 — volatility cluster of 7.89% to 8.46% |
+| Biggest Event | FTX collapse November 2022 volatility cluster of 7.89% to 8.46% |
 
 ---
 
@@ -393,11 +393,11 @@ Twitter sentiment is a stronger predictor of daily returns than news sentiment, 
 | Limitation | Explanation |
 |-----------|-------------|
 | Small data overlap | Only 429 rows in master dataset due to limited intersection of three sources |
-| News data ends 2023 | BTC.csv ends February 2023 — no news features for 2023 to 2025 |
+| News data ends 2023 | BTC.csv ends February 2023 no news features for 2023 to 2025 |
 | TextBlob sentiment | General-purpose tool; FinBERT would be more accurate for financial text |
-| No real-time feeds | Historical data only — live prediction not supported |
+| No real-time feeds | Historical data only live prediction not supported |
 | Rule-based RAG | Narrative templates used instead of a live LLM |
-| Separate file training not possible | Target variable exists only in price data — merge was required |
+| Separate file training not possible | Target variable exists only in price data merge was required |
 
 ---
 
