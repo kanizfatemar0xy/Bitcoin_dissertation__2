@@ -1,256 +1,308 @@
-# Bitcoin Volatility Prediction Using News & Social Media with Explainable AI and Retrieval-Augmented Generation
+# 🔮 Bitcoin Volatility Prediction
+### Using News & Social Media Sentiment with Explainable AI (SHAP) and Retrieval-Augmented Generation (RAG)
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
-![Flask](https://img.shields.io/badge/Flask-3.x-black?logo=flask)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?logo=tensorflow)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-f7931e?logo=scikit-learn)
-![SHAP](https://img.shields.io/badge/SHAP-Explainable%20AI-brightgreen)
-![License](https://img.shields.io/badge/License-Academic-lightgrey)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.x-000000?style=for-the-badge&logo=flask&logoColor=white)
+![SHAP](https://img.shields.io/badge/SHAP-XAI-00C853?style=for-the-badge)
+![RAG](https://img.shields.io/badge/RAG-Narratives-7B1FA2?style=for-the-badge)
 
-**Masters Research Project — COM748**  
-*Kaniz Fatema Roxy · Supervisor: Dr Nasir Iqbal*
+<br/>
+
+> **Masters Research Project — COM748**
+> *Kaniz Fatema Roxy (B01036656) · Supervisor: Dr Nasir Iqbal*
+
+<br/>
+
+**[📊 View Results](#-results--model-performance) · [🚀 Quick Start](#-installation--quick-start) · [🏗 Architecture](#-system-architecture) · [📁 Project Structure](#-project-structure)**
 
 </div>
 
 ---
 
-## Table of Contents
+## 📌 What This Project Does
 
-- [Overview](#overview)
-- [Problem Statement](#problem-statement)
-- [Project Architecture](#project-architecture)
-- [Datasets](#datasets)
-- [Experiments](#experiments)
-- [Models](#models)
-- [Explainable AI — SHAP](#explainable-ai--shap)
-- [Retrieval-Augmented Generation — RAG](#retrieval-augmented-generation--rag)
-- [Web Dashboard](#web-dashboard)
-- [Project Structure](#project-structure)
-- [Installation & Setup](#installation--setup)
-- [How to Run](#how-to-run)
-- [Results Summary](#results-summary)
-- [References](#references)
+Traditional Bitcoin volatility models are **black boxes** — they predict *when* volatility happens but can't explain *why*. This project solves that.
+
+| Challenge | Our Solution |
+|-----------|-------------|
+| Black-box AI models | ✅ SHAP Explainable AI — shows which features drive predictions |
+| No context for volatility spikes | ✅ RAG Pipeline — generates human-readable narrative explanations |
+| Single-source prediction | ✅ 3 Experiments — Price only, +News, +Tweets, +All combined |
+| Static analysis only | ✅ Live Flask Dashboard — real-time predictions using yfinance + RSS |
 
 ---
 
-## Overview
+## 🎯 Research Objectives
 
-This project presents an **interpretable, end-to-end framework** for predicting and explaining Bitcoin price volatility. It combines:
-
-- **Machine Learning & Deep Learning** models trained on financial and sentiment data
-- **Explainable AI (XAI)** via SHAP (SHapley Additive exPlanations) to identify the most influential features driving volatility
-- **Retrieval-Augmented Generation (RAG)** to provide human-readable narrative explanations for high-volatility events
-- **A Flask Web Dashboard** for live and historical volatility prediction with interactive model selection
-
-The framework goes beyond traditional black-box prediction — it tells *why* Bitcoin is volatile, not just *when*.
+1. Investigate the relationship between Bitcoin price volatility and social media / news sentiment
+2. Measure how sentiment indicators trigger rapid volatility spikes
+3. Evaluate SHAP's ability to identify the most influential features
+4. Determine whether RAG provides meaningful narrative explanations aligned with quantitative analysis
 
 ---
 
-## Problem Statement
-
-Bitcoin exhibits extreme price volatility, creating significant risk for investors and financial analysts. Existing AI models for volatility prediction largely operate as black-box systems with limited transparency, which undermines trust and restricts informed decision-making.
-
-This project bridges the gap by building a unified framework that:
-
-1. Predicts Bitcoin volatility using historical price data combined with news and social media sentiment
-2. Explains model predictions at the feature level using SHAP
-3. Contextualises volatility spikes with narrative summaries using RAG
-
----
-
-## Project Architecture
+## 🏗 System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     DATA LAYER                              │
-│  Yahoo Finance (Price) · Kaggle Tweets · Kaggle News        │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  FEATURE ENGINEERING                        │
-│  Daily Returns · Rolling Volatility (7d/30d)                │
-│  Lag Features (1,2,3,7 days) · Moving Averages             │
-│  Sentiment Aggregation (TextBlob) · Price Range Features    │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-                 ┌──────────┼──────────┐
-                 ▼          ▼          ▼
-            Exp 1       Exp 2       Exp 3
-         Price+News  Price+Tweets  All Three
-                 │          │          │
-                 └──────────┼──────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    MODEL LAYER                              │
-│  Random Forest · XGBoost · Gradient Boosting · SVR         │
-│  LSTM · Neural Network                                      │
-└──────────┬──────────────────────────────┬───────────────────┘
-           │                              │
-           ▼                              ▼
-┌──────────────────┐            ┌─────────────────────────────┐
-│   SHAP (XAI)     │            │     RAG PIPELINE            │
-│  TreeExplainer   │            │  Event Detection            │
-│  KernelExplainer │            │  TF-IDF Retrieval           │
-│  Feature Rankings│            │  Narrative Generation       │
-└──────────────────┘            └─────────────────────────────┘
-           │                              │
-           └──────────────┬───────────────┘
-                          ▼
-           ┌──────────────────────────────┐
-           │     FLASK WEB DASHBOARD      │
-           │  Live Prediction · SHAP Plot │
-           │  RAG Summary · RMSE/MAE      │
-           └──────────────────────────────┘
+╔══════════════════════════════════════════════════════════════════════╗
+║                         DATA LAYER                                  ║
+║   📈 Yahoo Finance (Price)  🐦 Kaggle Tweets  📰 Kaggle News       ║
+╚══════════════════════════════╦═══════════════════════════════════════╝
+                               ║
+                               ▼
+╔══════════════════════════════════════════════════════════════════════╗
+║                    FEATURE ENGINEERING                              ║
+║  Daily Returns · 7d/30d Rolling Volatility · MA7 · MA30            ║
+║  Lag Features (1,2,3,7 days) · TextBlob Sentiment · Price Range    ║
+╚════════════╦══════════════════╦═══════════════════════════════════════╝
+             ║                  ║                  ║
+             ▼                  ▼                  ▼
+       ┌──────────┐      ┌──────────┐      ┌──────────────┐
+       │  Exp 1   │      │  Exp 2   │      │   Exp 3      │
+       │Price+News│      │Price+Twt │      │  All Three   │
+       │ ~755 rows│      │ ~858 rows│      │  429 rows    │
+       └────┬─────┘      └────┬─────┘      └──────┬───────┘
+            └─────────────────┴──────────────────┘
+                               ║
+                               ▼
+╔══════════════════════════════════════════════════════════════════════╗
+║                        6 ML MODELS                                  ║
+║  Random Forest · XGBoost · Gradient Boosting · SVR · LSTM · NN    ║
+╚════════════╦═════════════════════════════════════╦══════════════════╝
+             ║                                     ║
+             ▼                                     ▼
+    ┌─────────────────┐                  ┌──────────────────────┐
+    │   SHAP (XAI)    │                  │    RAG PIPELINE      │
+    │ TreeExplainer   │                  │ Event Detection      │
+    │ KernelExplainer │                  │ TF-IDF Retrieval     │
+    │ Feature Rankings│                  │ Narrative Generation │
+    └────────┬────────┘                  └──────────┬───────────┘
+             └─────────────────┬─────────────────────┘
+                               ▼
+            ╔══════════════════════════════════════╗
+            ║       FLASK WEB DASHBOARD            ║
+            ║  Live & Historical Prediction        ║
+            ║  SHAP Plots · RAG Summary            ║
+            ║  RMSE / MAE / R² Inline Display      ║
+            ╚══════════════════════════════════════╝
 ```
 
 ---
 
-## Datasets
+## 📦 Datasets
 
-Three publicly available datasets were used, all filtered to **2021 onwards** for modern relevance:
+| # | Dataset | Source | Raw | Filtered | Date Range |
+|---|---------|--------|-----|---------|-----------|
+| 1 | **Bitcoin Price** | Yahoo Finance via Kaggle | 3,810 rows | **1,512 rows** | Jan 2021 → Feb 2025 |
+| 2 | **Bitcoin Tweets** | Kaggle | 11,295 records | **887 rows** (daily agg.) | Nov 2021 → Sep 2024 |
+| 3 | **Bitcoin News** | Kaggle (BTC.csv) | 1,826 rows | **785 rows** | Jan 2021 → Feb 2023 |
 
-| # | Dataset | Source | Raw Rows | After Filter | Date Range |
-|---|---------|--------|----------|-------------|------------|
-| 1 | Bitcoin Historical Price | Yahoo Finance via Kaggle | 3,810 | 1,512 | 2021-01-01 → 2025-02-20 |
-| 2 | Bitcoin Tweets Sentiment | Kaggle | 11,295 (individual) | 887 (daily) | 2021-11-05 → 2024-09-12 |
-| 3 | Bitcoin News Sentiment | Kaggle (BTC.csv) | 1,826 | 785 | 2021-01-01 → 2023-02-24 |
+**Target Variable:** `Volatility_7d` — 7-day rolling standard deviation of daily returns
 
-**Price features computed:** `Daily_Return`, `Volatility_7d`, `Volatility_30d`, `MA7`, `MA30`, `Return_Std7`, `Price_Range`
-
-**Sentiment features:** `Avg_Sentiment` (TextBlob, −1 to +1), `Tweet_Count` / `News_Count`, `Positive_Count`, `Negative_Count`, `Neutral_Count`
-
-**Lag features added:** 1, 2, 3, 7-day lags for all price and sentiment columns
-
-**Target variable:** `Volatility_7d` (7-day rolling standard deviation of daily returns)
+**Features per dataset:** Price columns + Sentiment scores + Lag features (1,2,3,7 days) + Rolling averages (MA7, MA30, Return_Std7)
 
 ---
 
-## Experiments
+## 🧪 Experiments
 
-Three separate datasets were constructed via inner joins to enable controlled comparison:
+Three controlled experiments with progressively richer sentiment data:
 
-| Experiment | Files Merged | Rows | Features | Date Range | Coverage |
-|------------|-------------|------|----------|-----------|----------|
-| **Exp 1** — Price + News | Price ∩ News | ~755 | ~47 | 2021-01-31 → 2023-02-24 | ~26 months |
-| **Exp 2** — Price + Tweets | Price ∩ Tweets | ~858 | ~47 | 2021-12-18 → 2024-09-12 | ~34 months |
-| **Exp 3** — Price + Tweets + News | Price ∩ Tweets ∩ News | 429 | 43+ | 2021-12-18 → 2023-02-24 | ~14 months |
+| | **Exp 1** | **Exp 2** | **Exp 3** |
+|---|-----------|-----------|-----------|
+| **Data** | Price + News | Price + Tweets | Price + Tweets + News |
+| **Rows** | ~755 | ~858 | 429 |
+| **Features** | ~47 | ~47 | 43 |
+| **Train / Test** | ~604 / ~151 | ~686 / ~172 | 343 / 86 |
+| **Date Range** | Jan 2021 – Feb 2023 | Nov 2021 – Sep 2024 | Dec 2021 – Feb 2023 |
+| **Coverage** | ~26 months | ~34 months | ~14 months |
 
-> All experiments use 80/20 chronological train/test split to prevent data leakage.
-
----
-
-## Models
-
-Six models were trained per experiment (18 total):
-
-| Model | Type | Key Hyperparameters |
-|-------|------|---------------------|
-| **Random Forest** | Ensemble (Tree) | n_estimators=200, random_state=42 |
-| **XGBoost** | Gradient Boosting (Tree) | n_estimators=200, lr=0.05, max_depth=6 |
-| **Gradient Boosting** | Ensemble (Tree) | n_estimators=200, lr=0.05, max_depth=4 |
-| **SVR** | Support Vector | kernel=rbf, C=10, gamma=scale |
-| **LSTM** | Deep Learning (RNN) | 64→32 units, Dropout=0.2, timesteps=10 |
-| **Neural Network** | Deep Learning (MLP) | 128→64→32 units, Dropout=0.2 |
-
-All models use `StandardScaler` on both features and target. Early stopping (patience=10) is applied for LSTM and NN.
+> All experiments use **80/20 chronological split** — no data leakage.
 
 ---
 
-## Explainable AI — SHAP
+## 🤖 Models Trained
 
-SHAP (SHapley Additive exPlanations) values are computed for all six models using the most appropriate explainer per model type:
+| Model | Type | Notes |
+|-------|------|-------|
+| **Random Forest** | Ensemble (Tree) | 200 estimators |
+| **XGBoost** | Gradient Boosting | lr=0.05, depth=6 |
+| **Gradient Boosting** | Ensemble (Tree) | lr=0.05, depth=4 |
+| **SVR** | Kernel Method | RBF kernel, C=10 |
+| **LSTM** | Deep Learning | 64→32 units, timesteps=10 |
+| **Neural Network** | Deep Learning | 128→64→32 units |
 
-| Model | SHAP Explainer | Output |
-|-------|---------------|--------|
-| Random Forest | `TreeExplainer` | Bar + Beeswarm plots |
-| XGBoost | `TreeExplainer` | Bar + Beeswarm plots |
-| Gradient Boosting | `TreeExplainer` | Bar + Beeswarm plots |
-| SVR | `KernelExplainer` | Bar plot |
-| Neural Network | `KernelExplainer` | Bar plot |
-| LSTM | `KernelExplainer` (sequence) | Bar plot (avg over timesteps) |
-
-**Key SHAP finding (Exp 3):** `Return_Std7` is the dominant feature (SHAP = 1.26), followed by price lag features. Tweet sentiment ranks 7th, confirming its secondary but meaningful contribution to volatility prediction.
-
-All SHAP results saved to: `shap/exp1/`, `shap/exp2/`, `shap/exp3/`
+**Total models trained: 6 models × 3 experiments = 18 models**
 
 ---
 
-## Retrieval-Augmented Generation — RAG
+## 📊 Results & Model Performance
 
-The RAG pipeline contextualises the top 10 highest-volatility events per experiment:
+### ✅ Experiment 1 — Price + News (~755 rows)
 
-1. **Event Detection** — Volatility threshold = mean + 1.5σ
-2. **Context Retrieval** — TF-IDF cosine similarity retrieves the 3 most relevant surrounding data rows (±3 days)
-3. **Narrative Generation** — Structured narrative linking price movement, sentiment signals, and known market events (e.g., FTX collapse, Bitcoin ETF approval, Terra/LUNA crash)
+| Model | R² | RMSE | MAE | Verdict |
+|-------|-----|------|-----|---------|
+| Random Forest | 0.9942 | 0.1152 | 0.0520 | 🟢 Excellent |
+| XGBoost | 0.9973 | 0.0790 | 0.0392 | 🟢 Excellent |
+| **Gradient Boosting** | **0.9987** | **0.0537** | **0.0247** | 🏆 Best in Exp 1 |
+| SVR | 0.8558 | 0.5753 | 0.3984 | 🟡 Moderate |
+| LSTM | −0.1584 | 1.6799 | 1.4597 | 🔴 Poor |
+| Neural Network | 0.9685 | 0.2688 | 0.2083 | 🟢 Good |
 
-**Output per experiment:**
-- `rag_narratives.txt` — human-readable event reports
-- `rag_narratives.json` — structured data for the dashboard
-- `rag_summary_table.csv` — top 10 events with metadata
-- `rag_volatility_events.png` — timeline with marked events
-- `rag_event_analysis.png` — top 5 events bar chart
+### ✅ Experiment 2 — Price + Tweets (~858 rows)
 
-**Key RAG finding:** 5 of the top 10 high-volatility events aligned with negative news sentiment, confirming the news-volatility relationship proposed in the literature.
+| Model | R² | RMSE | MAE | Verdict |
+|-------|-----|------|-----|---------|
+| **Random Forest** | **0.8898** | **0.4059** | **0.2143** | 🏆 Best in Exp 2 |
+| XGBoost | 0.8704 | 0.4403 | 0.2589 | 🟢 Good |
+| Gradient Boosting | 0.8720 | 0.4374 | 0.2549 | 🟢 Good |
+| SVR | 0.2656 | 1.0480 | 0.8156 | 🔴 Poor |
+| LSTM | −0.1930 | 1.3320 | 0.9488 | 🔴 Poor |
+| Neural Network | 0.8271 | 0.5085 | 0.3832 | 🟡 Moderate |
+
+### ✅ Experiment 3 — Price + Tweets + News (429 rows)
+
+| Model | R² | RMSE | MAE | Verdict |
+|-------|-----|------|-----|---------|
+| Random Forest | 0.9855 | 0.1182 | 0.0662 | 🟢 Excellent |
+| XGBoost | 0.9841 | 0.1241 | 0.0696 | 🟢 Excellent |
+| **Gradient Boosting** | **0.9918** | **0.0891** | **0.0536** | 🏆 Best in Exp 3 |
+| SVR | 0.8702 | 0.3541 | 0.2743 | 🟡 Moderate |
+| LSTM | 0.3100 | 0.8585 | 0.7243 | 🔴 Poor |
+| Neural Network | 0.6969 | 0.5412 | 0.4525 | 🟡 Moderate |
 
 ---
 
-## Web Dashboard
+### 🏆 Overall Best Models (Cross-Experiment)
 
-A Flask-based interactive dashboard provides real-time and historical analysis:
+| Rank | Model | Best Experiment | R² | RMSE | MAE |
+|------|-------|----------------|-----|------|-----|
+| 🥇 1st | **Gradient Boosting** | Exp 1 (Price+News) | **0.9987** | **0.0537** | **0.0247** |
+| 🥈 2nd | XGBoost | Exp 1 (Price+News) | 0.9973 | 0.0790 | 0.0392 |
+| 🥉 3rd | Random Forest | Exp 1 (Price+News) | 0.9942 | 0.1152 | 0.0520 |
 
-### Features
+> **Key Insight:** Experiment 1 (Price + News) consistently outperforms Exp 2 and Exp 3 for tree-based models, suggesting **news sentiment is a stronger predictor of volatility than tweet sentiment** for this dataset.
+
+---
+
+### 📉 Why LSTM & SVR Underperform
+
+**LSTM:** Deep learning sequence models require significantly larger datasets to generalise. With 86–172 test samples, the model lacks sufficient temporal patterns and overfits on training data. This is consistent with findings in financial ML literature where tree-based models outperform deep learning on small tabular datasets.
+
+**SVR (Exp 2):** SVR struggled specifically with the tweet-only sentiment experiment (R² = 0.27), likely due to the high day-to-day noise in social media sentiment signals, which makes the decision boundary harder to separate with a kernel function.
+
+---
+
+## 🔍 Explainable AI — SHAP Results
+
+SHAP values computed for all 6 models × 3 experiments using:
+
+| Model | Explainer Used |
+|-------|---------------|
+| Random Forest, XGBoost, Gradient Boosting | `TreeExplainer` (fast, exact) |
+| SVR | `KernelExplainer` |
+| Neural Network | `KernelExplainer` |
+| LSTM | `KernelExplainer` (flattened sequences, averaged over timesteps) |
+
+**Key SHAP Finding (Exp 3 — All Features):**
+
+```
+Top Features by Mean |SHAP Value|:
+  1. Return_Std7              (dominant — rolling volatility signal)
+  2. Volatility_7d_Lag1       (yesterday's volatility)
+  3. Close_Lag1               (yesterday's price)
+  4. Daily_Return_Lag1
+  5. MA7
+  6. Volatility_7d_Lag3
+  7. Tweet_Sentiment_Lag3     ← sentiment enters top 10
+  8. News_Avg_Sentiment_Lag1  ← news sentiment also present
+```
+
+> Sentiment features consistently rank in the **top 10** but below price-derived features, confirming that while sentiment influences volatility, **historical price volatility is the dominant predictor**.
+
+---
+
+## 📖 RAG — Retrieval-Augmented Generation
+
+The RAG pipeline automatically identifies and explains the **top 10 highest-volatility events** per experiment.
+
+**How it works:**
+
+```
+Step 1 → Detect events where Volatility_7d > mean + 1.5σ
+Step 2 → Retrieve surrounding ±3 day context using TF-IDF similarity
+Step 3 → Generate structured narrative linking price, sentiment & market events
+Step 4 → Save as .txt, .json, .csv + visualisation plots
+```
+
+**Notable events captured:**
+
+| Date | Volatility Level | Market Context |
+|------|----------------|----------------|
+| 2022-05-xx | EXTREME | Terra/LUNA collapse — crypto market crash |
+| 2022-11-xx | EXTREME | FTX collapse — major crypto crisis |
+| 2021-05-xx | HIGH | China crypto mining ban |
+| 2022-03-xx | HIGH | Russia-Ukraine war — market uncertainty |
+| 2021-11-xx | HIGH | Bitcoin new ATH near $69K |
+
+**Finding:** 5 of the top 10 high-volatility events aligned with **negative news sentiment**, supporting the hypothesis that negative sentiment amplifies volatility.
+
+---
+
+## 🌐 Web Dashboard
+
+A live Flask dashboard for interactive prediction:
+
+```
+http://127.0.0.1:5000
+```
+
+**Features:**
 
 | Feature | Description |
 |---------|-------------|
-| **Experiment Selection** | Choose Exp 1, 2, or 3 from dropdown |
-| **Date Selection** | Any date — uses nearest dataset row if outside range |
-| **Model Selection** | All 6 models available per experiment |
-| **Live Mode** | Today/yesterday → yfinance + RSS news feeds (Google News, CoinDesk) |
-| **Historical Mode** | CSV lookup → exact row or nearest-neighbour |
-| **Predicted Volatility** | Next-day volatility forecast |
-| **Trend Indicator** | Increase / Decrease / Stable |
-| **RMSE / MAE / R²** | Model accuracy metrics shown inline |
-| **RAG Summary** | Nearest high-volatility event narrative |
-| **SHAP Plot** | Feature impact visualisation per model |
-
-### Live Data Sources
-- **Price:** Yahoo Finance via `yfinance`
-- **News Sentiment:** Google News RSS + CoinDesk RSS + TextBlob
+| 🔬 Experiment Selector | Switch between Exp 1, 2, or 3 |
+| 📅 Any Date | Historical OR live — works for any date |
+| 🤖 Model Selector | All 6 models available |
+| ⚡ Live Mode | Today → yfinance + Google News RSS + CoinDesk RSS |
+| 📂 Historical Mode | Exact CSV row, or nearest-neighbour fallback |
+| 📈 Prediction | Next-day volatility forecast |
+| 📊 RMSE/MAE/R² | Model accuracy shown inline on results page |
+| 📰 RAG Summary | Nearest event narrative from RAG database |
+| 🔍 SHAP Plot | Feature impact chart per selected model |
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 Bitcoin/
 │
-├── data/
-│   ├── 1_price_data.csv              # Raw price data (2021–2025)
+├── 📁 data/
+│   ├── 1_price_data.csv              # Raw Bitcoin price (2021–2025)
 │   ├── 2_tweets_data.csv             # Raw tweet sentiment (daily)
 │   ├── 3_news_data.csv               # Raw news sentiment (daily)
-│   ├── master_price_news.csv         # Exp 1 dataset (~755 rows)
-│   ├── master_price_tweets.csv       # Exp 2 dataset (~858 rows)
-│   └── master_dataset.csv            # Exp 3 dataset (429 rows)
+│   ├── master_price_news.csv         # Exp 1 — ~755 rows, ~47 features
+│   ├── master_price_tweets.csv       # Exp 2 — ~858 rows, ~47 features
+│   └── master_dataset.csv            # Exp 3 — 429 rows, 43 features
 │
-├── models/
-│   ├── exp1/                         # Exp 1 trained models + scalers
-│   │   ├── random_forest_model.pkl
-│   │   ├── xgboost_model.pkl
-│   │   ├── gradient_boosting_model.pkl
-│   │   ├── svr_model.pkl
-│   │   ├── lstm_model.keras
-│   │   ├── nn_model.keras
-│   │   ├── scaler.pkl
-│   │   ├── y_scaler.pkl
-│   │   └── results.csv
-│   ├── exp2/                         # Exp 2 (same structure)
-│   └── exp3/                         # Exp 3 (same structure)
+├── 📁 models/
+│   ├── exp1/                         # 6 trained models + scalers + results
+│   ├── exp2/                         # (same structure)
+│   └── exp3/                         # (same structure)
+│         ├── random_forest_model.pkl
+│         ├── xgboost_model.pkl
+│         ├── gradient_boosting_model.pkl
+│         ├── svr_model.pkl
+│         ├── lstm_model.keras
+│         ├── nn_model.keras
+│         ├── scaler.pkl / y_scaler.pkl
+│         └── results.csv
 │
-├── plots/
+├── 📁 plots/
 │   ├── individual/                   # Price, Tweet, News line plots
 │   ├── similarity/                   # Normalized comparison plots
 │   └── experiments/
@@ -258,212 +310,119 @@ Bitcoin/
 │       ├── exp2_price_tweets/
 │       └── exp3_all/
 │
-├── shap/
-│   ├── exp1/                         # SHAP bar, beeswarm, comparison
+├── 📁 shap/
+│   ├── exp1/                         # Bar + Beeswarm + Comparison + CSV
 │   ├── exp2/
 │   └── exp3/
 │
-├── rag/
-│   ├── exp1/                         # RAG narratives, JSON, CSV, plots
+├── 📁 rag/
+│   ├── exp1/                         # narratives.txt/.json, summary.csv, plots
 │   ├── exp2/
 │   └── exp3/
 │
-├── results/
-│   ├── exp1_results.csv              # R², RMSE, MAE per model
-│   ├── exp2_results.csv
-│   ├── exp3_results.csv
+├── 📁 results/
+│   ├── exp1_results.csv              # R², RMSE, MAE — Exp 1
+│   ├── exp2_results.csv              # R², RMSE, MAE — Exp 2
+│   ├── exp3_results.csv              # R², RMSE, MAE — Exp 3
 │   ├── all_experiments_comparison.csv
 │   └── plots/
-│       ├── exp1_metrics_comparison.png
-│       ├── exp2_metrics_comparison.png
-│       ├── exp3_metrics_comparison.png
-│       ├── all_r2_comparison.png
-│       ├── all_rmse_comparison.png
-│       ├── all_mae_comparison.png
+│       ├── exp1/2/3_metrics_comparison.png
+│       ├── all_r2/rmse/mae_comparison.png
 │       └── actual_vs_predicted/      # 18 plots (6 models × 3 experiments)
 │
-├── scripts/
-│   ├── create_master_datasets.py     # Step 1 — build 3 master datasets
-│   ├── generate_all_plots.py         # Step 2 — all EDA plots
+├── 📁 scripts/                       # Run in order ↓
+│   ├── create_master_datasets.py     # Step 1 — build datasets
+│   ├── generate_all_plots.py         # Step 2 — EDA plots
 │   ├── train_all_experiments.py      # Step 3 — train 18 models
-│   ├── shap_analysis.py             # Step 4 — SHAP for all models
+│   ├── shap_analysis.py             # Step 4 — SHAP explanations
 │   ├── rag_pipeline.py              # Step 5 — RAG narratives
-│   └── evaluate_all_experiments.py  # Step 6 — RMSE/MAE evaluation
+│   └── evaluate_all_experiments.py  # Step 6 — RMSE/MAE/R² evaluation
 │
-├── templates/
-│   ├── index.html                    # Dashboard home page
-│   └── results.html                  # Prediction results page
+├── 📁 templates/
+│   ├── index.html                    # Dashboard home
+│   └── results.html                  # Prediction results
 │
-├── app.py                            # Flask web application
-└── README.md                         # This file
+├── app.py                            # 🌐 Flask web application
+└── README.md                         # 📖 This file
 ```
 
 ---
 
-## Installation & Setup
+## 🚀 Installation & Quick Start
 
 ### Prerequisites
 
-- Python 3.10 or higher
+- Python 3.10+
 - pip
 
-### 1. Clone / Download the project
-
-```bash
-git clone https://github.com/yourusername/bitcoin-volatility-xai.git
-cd bitcoin-volatility-xai
-```
-
-### 2. Install dependencies
+### 1. Install dependencies
 
 ```bash
 pip install pandas numpy matplotlib scikit-learn xgboost tensorflow shap flask yfinance textblob
 ```
 
-Or install from requirements:
+### 2. Place raw data files in `data/`
 
-```bash
-pip install -r requirements.txt
-```
-
-<details>
-<summary>Full requirements list</summary>
-
-```
-pandas>=2.0
-numpy>=1.24
-matplotlib>=3.7
-scikit-learn>=1.3
-xgboost>=2.0
-tensorflow>=2.13
-shap>=0.43
-flask>=3.0
-yfinance>=0.2
-textblob>=0.17
-```
-
-</details>
-
-### 3. Place raw data files
-
-Download datasets from Kaggle and place in `data/`:
-
-| File | Kaggle Link |
-|------|-------------|
+| File to rename | Kaggle Dataset |
+|---------------|----------------|
 | `1_price_data.csv` | [Bitcoin Historical Data 2014–2025](https://www.kaggle.com/datasets/eldintarofarrandi/bitcoin-historical-data-2014-2025-yahoo-finance) |
 | `2_tweets_data.csv` | [Bitcoin Tweets](https://www.kaggle.com/datasets/sujaykapadnis/bitcoin-tweets) |
 | `3_news_data.csv` | [Bitcoin News Dataset](https://www.kaggle.com/datasets/ashirwadsangwan/bitcoinnews-dataset) |
 
----
-
-## How to Run
-
-Run the scripts **in order** from the `scripts/` folder:
+### 3. Run the pipeline — in order
 
 ```bash
-cd Bitcoin
-
-# Step 1 — Create 3 master datasets (~2 min)
+# Step 1 — Create master datasets (~2 min)
 py scripts/create_master_datasets.py
 
-# Step 2 — Generate all EDA plots (~1 min)
+# Step 2 — Generate EDA plots (~1 min)
 py scripts/generate_all_plots.py
 
 # Step 3 — Train all 18 models (~30–45 min)
 py scripts/train_all_experiments.py
 
-# Step 4 — SHAP analysis for all models (~20–30 min)
+# Step 4 — SHAP analysis (~20–30 min)
 py scripts/shap_analysis.py
 
 # Step 5 — RAG pipeline (~2 min)
 py scripts/rag_pipeline.py
 
-# Step 6 — Evaluate RMSE / MAE / R² (~5–10 min)
+# Step 6 — Evaluate RMSE/MAE/R² (~5–10 min)
 py scripts/evaluate_all_experiments.py
 
-# Step 7 — Launch web dashboard
+# Step 7 — Launch dashboard
 py app.py
 ```
 
-Then open your browser: **http://127.0.0.1:5000**
+**Then open:** `http://127.0.0.1:5000`
 
 ---
 
-## Results Summary
+## 📚 References
 
-### Model Performance — Experiment 3 (Price + Tweets + News)
-
-> Best overall results achieved on the combined dataset.
-
-| Model | R² | RMSE | MAE |
-|-------|-----|------|-----|
-| Random Forest | 0.9853 | — | — |
-| XGBoost | 0.9906 | — | — |
-| Gradient Boosting | 0.9941 | — | — |
-| **SVR** | **0.9985** | — | — |
-| LSTM | −0.0277 | — | — |
-| Neural Network | 0.1781 | — | — |
-
-> **Best model: SVR (R² = 0.9985)**  
-> Tree-based and kernel models outperform deep learning models on this tabular time-series task, consistent with findings in financial ML literature.
-
-### Key Findings
-
-| Finding | Detail |
-|---------|--------|
-| **Best Model** | SVR — R² = 0.9985 (Exp 3) |
-| **Top SHAP Feature** | `Return_Std7` (SHAP = 1.2604) |
-| **Tweet Sentiment Rank** | 7th (via `Tweet_Sentiment_Lag3`) |
-| **Price vs Tweet Correlation** | r = 0.075 (price), r = 0.195 (return) |
-| **Price vs News Correlation** | r = 0.057 (price), r = 0.026 (return) |
-| **High Volatility Events** | 43 events above threshold (4.77%) |
-| **Sentiment-Aligned Events** | 5 of top 10 aligned with negative sentiment |
-
-### Why LSTM/NN Underperform
-
-Deep learning models require substantially larger datasets to generalise effectively. With only 429 rows (Exp 3) and 755–858 rows (Exp 1/2), the sequence models overfit and lack sufficient temporal patterns. Tree-based models handle small tabular datasets significantly better, which aligns with established literature on financial time series.
-
----
-
-## References
-
-```
-[1] P. Giudici, "Explainable artificial intelligence methods for financial time series,"
-    Physica A, vol. 641, 2024.
-
-[2] T. L. Huynh, "Investor sentiment and cryptocurrency market dynamics,"
-    IEEE Access, vol. 10, pp. 118451–118463, 2022.
-
-[3] A. Kumar, R. K. Sharma, and S. Singh, "Social media sentiment and financial market
-    volatility: A deep learning approach," IEEE Access, vol. 11, pp. 74231–74245, 2023.
-
-[4] S. Nasekin and W. Chen, "Cryptocurrency volatility forecasting using machine learning
-    techniques," IEEE TNNLS, vol. 32, no. 11, pp. 5105–5116, 2021.
-
-[5] S. Corbet et al., "Cryptocurrencies as a financial asset: A systematic analysis,"
-    International Review of Financial Analysis, vol. 62, pp. 182–199, 2019.
-
-[6] Y. Peng et al., "Deep learning for cryptocurrency price prediction,"
-    Expert Systems with Applications, vol. 141, 2020.
-
-[7] S. M. Lundberg and S.-I. Lee, "A unified approach to interpreting model predictions,"
-    NeurIPS, vol. 30, 2017.
-
-[8] P. Lewis et al., "Retrieval-augmented generation for knowledge-intensive NLP tasks,"
-    NeurIPS, vol. 33, 2020.
-
-[9] O. Izacard and E. Grave, "Leveraging passage retrieval with generative models for
-    open domain question answering," arXiv:2007.01282, 2020.
-
-[10] A. Kraaijeveld and J. De Smedt, "The predictive power of public Twitter sentiment
-     for forecasting cryptocurrency prices," JIMF, vol. 65, 2020.
-```
+| # | Citation |
+|---|---------|
+| [1] | P. Giudici, *"Explainable AI methods for financial time series,"* Physica A, vol. 641, 2024 |
+| [2] | T. L. Huynh, *"Investor sentiment and cryptocurrency market dynamics,"* IEEE Access, vol. 10, 2022 |
+| [3] | A. Kumar et al., *"Social media sentiment and financial market volatility,"* IEEE Access, vol. 11, 2023 |
+| [4] | S. Nasekin & W. Chen, *"Cryptocurrency volatility forecasting using ML,"* IEEE TNNLS, vol. 32, 2021 |
+| [5] | S. Corbet et al., *"Cryptocurrencies as a financial asset,"* IRFA, vol. 62, 2019 |
+| [6] | Y. Peng et al., *"Deep learning for cryptocurrency price prediction,"* Expert Systems, vol. 141, 2020 |
+| [7] | S. M. Lundberg & S.-I. Lee, *"A unified approach to interpreting model predictions,"* NeurIPS, 2017 |
+| [8] | P. Lewis et al., *"Retrieval-augmented generation for NLP tasks,"* NeurIPS, 2020 |
+| [9] | O. Izacard & E. Grave, *"Leveraging passage retrieval with generative models,"* arXiv:2007.01282, 2020 |
+| [10] | A. Kraaijeveld & J. De Smedt, *"Predictive power of Twitter for cryptocurrency prices,"* JIMF, 2020 |
 
 ---
 
 <div align="center">
 
-**COM748 Masters Research Project**  
-Kaniz Fatema Roxy · B01036656 · Supervisor: Dr Nasir Iqbal
+---
+
+**COM748 Masters Research Project**
+
+*Kaniz Fatema Roxy · B01036656 · Supervisor: Dr Nasir Iqbal*
+
+---
 
 </div>
