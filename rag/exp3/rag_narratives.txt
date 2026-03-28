@@ -1,0 +1,264 @@
+RAG VOLATILITY ANALYSIS — EXPERIMENT 3 — PRICE + TWEETS + NEWS
+Generated for top 10 high-volatility events
+=================================================================
+
+
+=================================================================
+EVENT #1 — November 10, 2022
+=================================================================
+Volatility Level  : EXTREME (8.460246)
+Bitcoin Price     : $17,586.77
+Daily Return      : +1074.25%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : -0.129 — Negative 📉
+  → Negative sentiment likely contributed to selling pressure.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.000 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative 📉) | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-10 | Close Price: $17,587 | Daily Return: 1074.25% | Volatility: 8.460246 | Tweet Sentiment: -0.129 (Negative 📉) | News Sentiment: 0.000 (Neutral ➡️)
+  [3] Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative 📉) | News Sentiment: -0.058 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 1074.2% price gain on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #2 — November 14, 2022
+=================================================================
+Volatility Level  : EXTREME (8.066039)
+Bitcoin Price     : $16,618.20
+Daily Return      : +161.94%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : 0.012 — Neutral ➡️
+  → Neutral social media — volatility driven by other factors.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.020 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-17 | Close Price: $16,688 | Daily Return: 10.85% | Volatility: 1.910561 | Tweet Sentiment: -0.232 (Negative 📉) | News Sentiment: 0.040 (Neutral ➡️)
+  [2] Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | Tweet Sentiment: -0.243 (Negative 📉) | News Sentiment: 0.031 (Neutral ➡️)
+  [3] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative 📉) | News Sentiment: 0.002 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 161.9% price gain on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #3 — June 19, 2022
+=================================================================
+Volatility Level  : EXTREME (8.043077)
+Bitcoin Price     : $20,553.27
+Daily Return      : +807.48%
+
+[MARKET CONTEXT]
+  Celsius Network froze withdrawals — bear market
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : 0.318 — Positive 📈
+  → Positive social media may have amplified buying pressure.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.119 — Positive 📈
+  → Positive news coverage may have driven price upward.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-06-20 | Close Price: $20,600 | Daily Return: 22.51% | Volatility: 5.859275 | Tweet Sentiment: -0.205 (Negative 📉) | News Sentiment: -0.027 (Neutral ➡️)
+  [2] Date: 2022-06-22 | Close Price: $19,987 | Daily Return: -349.37% | Volatility: 5.848798 | Tweet Sentiment: -0.146 (Negative 📉) | News Sentiment: 0.070 (Neutral ➡️)
+  [3] Date: 2022-06-17 | Close Price: $20,471 | Daily Return: 44.07% | Volatility: 6.279786 | Tweet Sentiment: -0.065 (Neutral ➡️) | News Sentiment: 0.027 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 807.5% price gain on this date aligns with: Celsius Network froze withdrawals — bear market.
+
+=================================================================
+EVENT #4 — November 11, 2022
+=================================================================
+Volatility Level  : EXTREME (7.994692)
+Bitcoin Price     : $17,034.29
+Daily Return      : -314.15%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : -0.207 — Negative 📉
+  → Negative sentiment likely contributed to selling pressure.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.002 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative 📉) | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-10 | Close Price: $17,587 | Daily Return: 1074.25% | Volatility: 8.460246 | Tweet Sentiment: -0.129 (Negative 📉) | News Sentiment: 0.000 (Neutral ➡️)
+  [3] Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative 📉) | News Sentiment: -0.058 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 314.1% price drop on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #5 — November 12, 2022
+=================================================================
+Volatility Level  : EXTREME (7.887114)
+Bitcoin Price     : $16,799.19
+Daily Return      : -138.02%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : -0.662 — Negative 📉
+  → Negative sentiment likely contributed to selling pressure.
+
+[NEWS SIGNAL]
+  News Sentiment    : -0.058 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative 📉) | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | Tweet Sentiment: -0.079 (Neutral ➡️) | News Sentiment: 0.024 (Neutral ➡️)
+  [3] Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative 📉) | News Sentiment: -0.058 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 138.0% price drop on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #6 — November 13, 2022
+=================================================================
+Volatility Level  : EXTREME (7.867269)
+Bitcoin Price     : $16,353.37
+Daily Return      : -265.38%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : 0.000 — Neutral ➡️
+  → Neutral social media — volatility driven by other factors.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.061 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative 📉) | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-13 | Close Price: $16,353 | Daily Return: -265.38% | Volatility: 7.867269 | Tweet Sentiment: 0.000 (Neutral ➡️) | News Sentiment: 0.061 (Neutral ➡️)
+  [3] Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | Tweet Sentiment: -0.079 (Neutral ➡️) | News Sentiment: 0.024 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 265.4% price drop on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #7 — November 15, 2022
+=================================================================
+Volatility Level  : EXTREME (7.496005)
+Bitcoin Price     : $16,884.61
+Daily Return      : +160.31%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : -0.079 — Neutral ➡️
+  → Neutral social media — volatility driven by other factors.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.024 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-18 | Close Price: $16,698 | Daily Return: 6.15% | Volatility: 1.594537 | Tweet Sentiment: -0.112 (Negative 📉) | News Sentiment: 0.159 (Positive 📈)
+  [2] Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | Tweet Sentiment: -0.243 (Negative 📉) | News Sentiment: 0.031 (Neutral ➡️)
+  [3] Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative 📉) | News Sentiment: -0.058 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 160.3% price gain on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #8 — March 04, 2022
+=================================================================
+Volatility Level  : EXTREME (7.122572)
+Bitcoin Price     : $39,137.61
+Daily Return      : -780.69%
+
+[MARKET CONTEXT]
+  Russia-Ukraine war — market uncertainty
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : -0.037 — Neutral ➡️
+  → Neutral social media — volatility driven by other factors.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.006 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-03-06 | Close Price: $38,420 | Daily Return: -248.88% | Volatility: 7.034519 | Tweet Sentiment: 0.200 (Positive 📈) | News Sentiment: 0.005 (Neutral ➡️)
+  [2] Date: 2022-03-05 | Close Price: $39,401 | Daily Return: 67.19% | Volatility: 7.121458 | Tweet Sentiment: -0.165 (Negative 📉) | News Sentiment: 0.043 (Neutral ➡️)
+  [3] Date: 2022-03-03 | Close Price: $42,452 | Daily Return: -335.20% | Volatility: 6.198301 | Tweet Sentiment: 0.049 (Neutral ➡️) | News Sentiment: 0.175 (Positive 📈)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 780.7% price drop on this date aligns with: Russia-Ukraine war — market uncertainty.
+
+=================================================================
+EVENT #9 — March 05, 2022
+=================================================================
+Volatility Level  : EXTREME (7.121458)
+Bitcoin Price     : $39,400.59
+Daily Return      : +67.19%
+
+[MARKET CONTEXT]
+  Russia-Ukraine war — market uncertainty
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : -0.165 — Negative 📉
+  → Negative sentiment likely contributed to selling pressure.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.043 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-03-06 | Close Price: $38,420 | Daily Return: -248.88% | Volatility: 7.034519 | Tweet Sentiment: 0.200 (Positive 📈) | News Sentiment: 0.005 (Neutral ➡️)
+  [2] Date: 2022-03-08 | Close Price: $38,737 | Daily Return: 177.40% | Volatility: 3.142611 | Tweet Sentiment: 0.263 (Positive 📈) | News Sentiment: -0.048 (Neutral ➡️)
+  [3] Date: 2022-03-03 | Close Price: $42,452 | Daily Return: -335.20% | Volatility: 6.198301 | Tweet Sentiment: 0.049 (Neutral ➡️) | News Sentiment: 0.175 (Positive 📈)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 67.2% price gain on this date aligns with: Russia-Ukraine war — market uncertainty.
+
+=================================================================
+EVENT #10 — March 06, 2022
+=================================================================
+Volatility Level  : EXTREME (7.034519)
+Bitcoin Price     : $38,419.98
+Daily Return      : -248.88%
+
+[MARKET CONTEXT]
+  Russia-Ukraine war — market uncertainty
+
+[SOCIAL MEDIA SIGNAL]
+  Twitter Sentiment : 0.200 — Positive 📈
+  → Positive social media may have amplified buying pressure.
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.005 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-03-08 | Close Price: $38,737 | Daily Return: 177.40% | Volatility: 3.142611 | Tweet Sentiment: 0.263 (Positive 📈) | News Sentiment: -0.048 (Neutral ➡️)
+  [2] Date: 2022-03-06 | Close Price: $38,420 | Daily Return: -248.88% | Volatility: 7.034519 | Tweet Sentiment: 0.200 (Positive 📈) | News Sentiment: 0.005 (Neutral ➡️)
+  [3] Date: 2022-03-03 | Close Price: $42,452 | Daily Return: -335.20% | Volatility: 6.198301 | Tweet Sentiment: 0.049 (Neutral ➡️) | News Sentiment: 0.175 (Positive 📈)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 248.9% price drop on this date aligns with: Russia-Ukraine war — market uncertainty.

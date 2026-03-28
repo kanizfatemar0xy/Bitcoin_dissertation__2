@@ -1,0 +1,7 @@
+Experiment,Model,R2,RMSE,MAE,Train_Rows,Test_Rows
+Exp 3 — Price + Tweets + News,Random Forest,0.9855,0.118175,0.066172,343,86
+Exp 3 — Price + Tweets + News,XGBoost,0.9841,0.124101,0.069639,343,86
+Exp 3 — Price + Tweets + News,Gradient Boosting,0.9918,0.089051,0.053553,343,86
+Exp 3 — Price + Tweets + News,SVR,0.8702,0.354141,0.274331,343,86
+Exp 3 — Price + Tweets + News,LSTM,0.31,0.858518,0.724331,343,76
+Exp 3 — Price + Tweets + News,Neural Network,0.6969,0.541186,0.452479,343,86

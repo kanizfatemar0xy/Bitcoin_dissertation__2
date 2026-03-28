@@ -1,297 +1,292 @@
+"""
+Script 4: shap_analysis.py — Final Fixed Version
+==================================================
+LSTM error fix: TensorListStack gradient issue
+→ LSTM + NN dono ke liye sirf KernelExplainer use karo
+
+- RF, XGB, GB  → TreeExplainer  (fast)
+- SVR          → KernelExplainer
+- NN           → KernelExplainer (model.predict wrapper)
+- LSTM         → KernelExplainer (sequence wrapper, avg over timesteps)
+
+Run: py shap_analysis.py
+"""
 import pandas as pd
 import numpy as np
-import os
-import warnings
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import shap
-import joblib
-from xgboost import XGBRegressor
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+import shap, pickle, os, warnings
 warnings.filterwarnings("ignore")
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
-# ══════════════════════════════════════════════════════════════
-# ⚙️  PATHS
-# ══════════════════════════════════════════════════════════════
-BASE        = r"C:\Users\HAROON KHAN\Desktop\bitcoin_volatility_project"
-DATA        = BASE + r"\data"
-MODELS_DIR  = BASE + r"\models"
-PLOTS_DIR   = BASE + r"\plots\shap"
-MASTER_FILE = DATA + r"\master_dataset.csv"
-os.makedirs(PLOTS_DIR, exist_ok=True)
-# ══════════════════════════════════════════════════════════════
+from tensorflow.keras.models import load_model
 
-plt.rcParams.update({
-    "figure.facecolor": "white", "axes.facecolor": "white",
-    "axes.edgecolor": "black",   "font.family": "DejaVu Sans",
-    "axes.titlesize": 12,        "axes.titleweight": "bold",
-    "axes.labelsize": 10,        "xtick.labelsize": 9,
-    "ytick.labelsize": 9,        "grid.color": "#cccccc",
-    "grid.linestyle": "--",      "grid.alpha": 0.5,
-})
+BASE_DIR   = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+MODELS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models")
+SHAP_DIR   = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "shap")
 
-# ══════════════════════════════════════════════════════════════
-# STEP 1: Load Data
-# ══════════════════════════════════════════════════════════════
+EXPERIMENTS = {
+    "exp1": {"file": os.path.join(BASE_DIR,"master_price_news.csv"),   "label":"Exp 1 — Price + News"},
+    "exp2": {"file": os.path.join(BASE_DIR,"master_price_tweets.csv"), "label":"Exp 2 — Price + Tweets"},
+    "exp3": {"file": os.path.join(BASE_DIR,"master_dataset.csv"),      "label":"Exp 3 — All"},
+}
+TARGET     = "Volatility_7d"
+TEST_SPLIT = 0.20
+TOP_N      = 15
+BG         = "#FAFAFA"
+TIMESTEPS  = 10
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+def load_pkl(path):
+    if not os.path.exists(path): return None
+    with open(path, "rb") as f:  return pickle.load(f)
+
+def make_sequences(X, ts=10):
+    return np.array([X[i:i+ts] for i in range(len(X) - ts)])
+
+def plot_bar(sv, feat_names, title, save_path, color="#4C72B0"):
+    sv  = np.array(sv)
+    ma  = np.abs(sv).mean(axis=0)
+    idx = np.argsort(ma)[::-1][:TOP_N]
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.barh([feat_names[i] for i in idx][::-1], ma[idx][::-1], color=color, alpha=0.85)
+    ax.set_facecolor(BG); fig.patch.set_facecolor(BG)
+    ax.set_xlabel("Mean |SHAP Value|", fontsize=10)
+    ax.set_title(title, fontsize=11, fontweight="bold", pad=8)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.grid(axis="x", linestyle="--", alpha=0.4)
+    plt.tight_layout()
+    fig.savefig(save_path, dpi=120, bbox_inches="tight")
+    plt.close(fig)
+    print(f"   ✅ {os.path.basename(save_path)}")
+    return ma
+
+def plot_beeswarm(model, X_sc, feat_names, title, save_path):
+    try:
+        expl = shap.Explainer(model, X_sc, feature_names=feat_names)
+        sv   = expl(X_sc)
+        ma   = np.abs(sv.values).mean(axis=0)
+        idx  = np.argsort(ma)[::-1][:TOP_N]
+        obj  = shap.Explanation(
+            values       = sv.values[:, idx],
+            base_values  = sv.base_values,
+            data         = sv.data[:, idx],
+            feature_names= [feat_names[i] for i in idx]
+        )
+        fig, _ = plt.subplots(figsize=(9, 6))
+        shap.plots.beeswarm(obj, max_display=TOP_N, show=False)
+        plt.title(title, fontsize=11, fontweight="bold")
+        plt.tight_layout()
+        fig.savefig(save_path, dpi=120, bbox_inches="tight")
+        plt.close("all")
+        print(f"   ✅ {os.path.basename(save_path)}")
+    except Exception as e:
+        print(f"   ⚠  Beeswarm: {e}")
+
+# ─── KernelExplainer wrappers ─────────────────────────────────────────────────
+def shap_nn_kernel(model, X_sc, n_bg=50, n_samp=100):
+    """NN: simple predict wrapper"""
+    bg   = X_sc[:min(n_bg,   len(X_sc))].astype(np.float32)
+    samp = X_sc[:min(n_samp, len(X_sc))].astype(np.float32)
+
+    def predict_fn(x):
+        return model.predict(x.astype(np.float32), verbose=0).ravel()
+
+    expl = shap.KernelExplainer(predict_fn, bg)
+    sv   = expl.shap_values(samp, nsamples=100)
+    return np.array(sv)
+
+def shap_lstm_kernel(model, X_sc, n_bg=20, n_samp=50):
+    """
+    LSTM: flatten (n, TS, feat) → (n, TS*feat) for KernelExplainer,
+    then reshape predictions back.
+    Average SHAP over timesteps → (n, feat)
+    """
+    X_seq = make_sequences(X_sc, TIMESTEPS)          # (n, TS, feat)
+    n_feat= X_seq.shape[2]
+
+    bg_seq   = X_seq[:min(n_bg,   len(X_seq))].astype(np.float32)
+    samp_seq = X_seq[:min(n_samp, len(X_seq))].astype(np.float32)
+
+    # Flatten for KernelExplainer
+    bg_flat   = bg_seq.reshape(len(bg_seq),   -1)
+    samp_flat = samp_seq.reshape(len(samp_seq), -1)
+
+    def predict_fn(x_flat):
+        x3d = x_flat.reshape(-1, TIMESTEPS, n_feat).astype(np.float32)
+        return model.predict(x3d, verbose=0).ravel()
+
+    print("   [KernelExplainer running — this takes ~5 min per experiment...]")
+    expl    = shap.KernelExplainer(predict_fn, bg_flat)
+    sv_flat = expl.shap_values(samp_flat, nsamples=100)  # (n, TS*feat)
+
+    # Average over timesteps
+    sv_3d = np.array(sv_flat).reshape(-1, TIMESTEPS, n_feat)
+    sv_2d = sv_3d.mean(axis=1)                            # (n, feat)
+    return sv_2d
+
+# ══════════════════════════════════════════════════════════════════════════════
 print("=" * 60)
-print("STEP 1: Loading Data & Models")
-print("=" * 60)
-
-df = pd.read_csv(MASTER_FILE, parse_dates=["Date"])
-
-FEATURES = [
-    "Close", "Open", "High", "Low", "Volume",
-    "Daily_Return", "Volatility_30d",
-    "Tweet_Sentiment", "Tweet_Count", "Tweet_Positive", "Tweet_Negative",
-    "News_Sentiment",  "News_Count",  "News_Positive",  "News_Negative",
-    "Close_Lag1", "Close_Lag2", "Close_Lag3", "Close_Lag7",
-    "Return_Lag1", "Return_Lag2", "Return_Lag3", "Return_Lag7",
-    "Tweet_Sentiment_Lag1", "Tweet_Sentiment_Lag3", "Tweet_Sentiment_Lag7",
-    "News_Sentiment_Lag1",  "News_Sentiment_Lag3",  "News_Sentiment_Lag7",
-    "Close_MA7", "Close_MA30", "Return_Std7",
-    "Tweet_Sent_MA7", "News_Sent_MA7",
-    "Volume_MA7", "Price_Range", "Price_Range_Pct",
-]
-TARGET = "Volatility_7d"
-
-X = df[FEATURES].values
-y = df[TARGET].values
-
-scaler = joblib.load(os.path.join(MODELS_DIR, "scaler.pkl"))
-X_scaled = scaler.transform(X)
-
-split      = int(len(X_scaled) * 0.80)
-X_train_sc = X_scaled[:split]
-X_test_sc  = X_scaled[split:]
-
-# Feature names for plots
-feat_names = FEATURES
-
-print(f"  Data shape  : {df.shape}")
-print(f"  Train/Test  : {len(X_train_sc)} / {len(X_test_sc)}")
-
-# Load models
-rf  = joblib.load(os.path.join(MODELS_DIR, "random_forest_model.pkl"))
-xgb = joblib.load(os.path.join(MODELS_DIR, "xgboost_model.pkl"))
-gb  = joblib.load(os.path.join(MODELS_DIR, "gradient_boosting_model.pkl"))
-svr = joblib.load(os.path.join(MODELS_DIR, "svr_model.pkl"))
-print("  ✅ All models loaded.")
-
-# ══════════════════════════════════════════════════════════════
-# STEP 2: SHAP — XGBoost (Best Tree Model)
-# ══════════════════════════════════════════════════════════════
-print("\n" + "=" * 60)
-print("STEP 2: SHAP for XGBoost")
-print("=" * 60)
-
-explainer_xgb  = shap.TreeExplainer(xgb)
-shap_vals_xgb  = explainer_xgb.shap_values(X_test_sc)
-shap_df_xgb    = pd.DataFrame(shap_vals_xgb, columns=feat_names)
-
-# Mean absolute SHAP
-mean_shap_xgb = pd.DataFrame({
-    "Feature": feat_names,
-    "SHAP_Importance": np.abs(shap_vals_xgb).mean(axis=0)
-}).sort_values("SHAP_Importance", ascending=False)
-
-print("  Top 10 Features (XGBoost):")
-print(mean_shap_xgb.head(10).to_string(index=False))
-
-# Plot 1 — XGBoost Bar Summary
-fig, ax = plt.subplots(figsize=(10, 7))
-top10_xgb = mean_shap_xgb.head(10)
-ax.barh(top10_xgb["Feature"][::-1], top10_xgb["SHAP_Importance"][::-1],
-        color="gray", edgecolor="black")
-ax.set_title("XGBoost — Top 10 Feature Importance (SHAP)")
-ax.set_xlabel("Mean |SHAP Value|")
-ax.grid(True, axis="x")
-plt.tight_layout()
-plt.savefig(os.path.join(PLOTS_DIR, "shap_xgb_bar.png"), dpi=150, bbox_inches="tight")
-plt.close()
-print("  ✅ Saved: plots/shap/shap_xgb_bar.png")
-
-# Plot 2 — XGBoost Beeswarm
-plt.figure(figsize=(10, 7))
-shap.summary_plot(shap_vals_xgb, X_test_sc,
-                  feature_names=feat_names, show=False, max_display=15)
-plt.title("XGBoost — SHAP Summary (Beeswarm)")
-plt.tight_layout()
-plt.savefig(os.path.join(PLOTS_DIR, "shap_xgb_beeswarm.png"),
-            dpi=150, bbox_inches="tight")
-plt.close()
-print("  ✅ Saved: plots/shap/shap_xgb_beeswarm.png")
-
-# ══════════════════════════════════════════════════════════════
-# STEP 3: SHAP — Random Forest
-# ══════════════════════════════════════════════════════════════
-print("\n" + "=" * 60)
-print("STEP 3: SHAP for Random Forest")
+print("  SHAP ANALYSIS — ALL EXPERIMENTS (Final Fixed)")
 print("=" * 60)
 
-explainer_rf = shap.TreeExplainer(rf)
-shap_vals_rf = explainer_rf.shap_values(X_test_sc)
-mean_shap_rf = pd.DataFrame({
-    "Feature": feat_names,
-    "SHAP_Importance": np.abs(shap_vals_rf).mean(axis=0)
-}).sort_values("SHAP_Importance", ascending=False)
+for exp_key, exp_info in EXPERIMENTS.items():
+    print(f"\n{'─'*60}\n  {exp_info['label']}\n{'─'*60}")
 
-print("  Top 10 Features (Random Forest):")
-print(mean_shap_rf.head(10).to_string(index=False))
+    if not os.path.exists(exp_info["file"]):
+        print("  ⚠  Dataset not found"); continue
 
-fig, ax = plt.subplots(figsize=(10, 7))
-top10_rf = mean_shap_rf.head(10)
-ax.barh(top10_rf["Feature"][::-1], top10_rf["SHAP_Importance"][::-1],
-        color="gray", edgecolor="black")
-ax.set_title("Random Forest — Top 10 Feature Importance (SHAP)")
-ax.set_xlabel("Mean |SHAP Value|")
-ax.grid(True, axis="x")
-plt.tight_layout()
-plt.savefig(os.path.join(PLOTS_DIR, "shap_rf_bar.png"), dpi=150, bbox_inches="tight")
-plt.close()
-print("  ✅ Saved: plots/shap/shap_rf_bar.png")
+    df        = pd.read_csv(exp_info["file"], parse_dates=["Date"]).sort_values("Date").reset_index(drop=True)
+    feat_cols = [c for c in df.columns if c not in ["Date", TARGET]]
+    X         = df[feat_cols].values
+    split     = int(len(X) * (1 - TEST_SPLIT))
+    X_test    = X[split:]
 
-# ══════════════════════════════════════════════════════════════
-# STEP 4: SHAP — Gradient Boosting
-# ══════════════════════════════════════════════════════════════
-print("\n" + "=" * 60)
-print("STEP 4: SHAP for Gradient Boosting")
-print("=" * 60)
+    mdl_dir   = os.path.join(MODELS_DIR, exp_key)
+    scaler_X  = load_pkl(os.path.join(mdl_dir, "scaler.pkl"))
+    if scaler_X is None:
+        print("  ⚠  Scaler not found — run train_all_experiments.py first!"); continue
 
-explainer_gb = shap.TreeExplainer(gb)
-shap_vals_gb = explainer_gb.shap_values(X_test_sc)
-mean_shap_gb = pd.DataFrame({
-    "Feature": feat_names,
-    "SHAP_Importance": np.abs(shap_vals_gb).mean(axis=0)
-}).sort_values("SHAP_Importance", ascending=False)
+    X_test_sc = scaler_X.transform(X_test)
+    out_dir   = os.path.join(SHAP_DIR, exp_key)
+    os.makedirs(out_dir, exist_ok=True)
+    all_imp   = {}
 
-print("  Top 10 Features (Gradient Boosting):")
-print(mean_shap_gb.head(10).to_string(index=False))
+    # ── 1. Random Forest ──────────────────────────────────────
+    print(f"\n  [1/6] Random Forest — TreeExplainer")
+    m = load_pkl(os.path.join(mdl_dir, "random_forest_model.pkl"))
+    if m:
+        try:
+            sv = shap.TreeExplainer(m).shap_values(X_test_sc)
+            all_imp["Random Forest"] = plot_bar(sv, feat_cols,
+                f"SHAP — Random Forest ({exp_info['label']})",
+                os.path.join(out_dir, "shap_random_forest_bar.png"), "#E67E22")
+            plot_beeswarm(m, X_test_sc, feat_cols,
+                f"SHAP Beeswarm — Random Forest",
+                os.path.join(out_dir, "shap_random_forest_beeswarm.png"))
+        except Exception as e: print(f"   ⚠  {e}")
+    else: print("   ⚠  Not found")
 
-fig, ax = plt.subplots(figsize=(10, 7))
-top10_gb = mean_shap_gb.head(10)
-ax.barh(top10_gb["Feature"][::-1], top10_gb["SHAP_Importance"][::-1],
-        color="gray", edgecolor="black")
-ax.set_title("Gradient Boosting — Top 10 Feature Importance (SHAP)")
-ax.set_xlabel("Mean |SHAP Value|")
-ax.grid(True, axis="x")
-plt.tight_layout()
-plt.savefig(os.path.join(PLOTS_DIR, "shap_gb_bar.png"), dpi=150, bbox_inches="tight")
-plt.close()
-print("  ✅ Saved: plots/shap/shap_gb_bar.png")
+    # ── 2. XGBoost ────────────────────────────────────────────
+    print(f"\n  [2/6] XGBoost — TreeExplainer")
+    m = load_pkl(os.path.join(mdl_dir, "xgboost_model.pkl"))
+    if m:
+        try:
+            sv = shap.TreeExplainer(m).shap_values(X_test_sc)
+            all_imp["XGBoost"] = plot_bar(sv, feat_cols,
+                f"SHAP — XGBoost ({exp_info['label']})",
+                os.path.join(out_dir, "shap_xgboost_bar.png"), "#2980B9")
+            plot_beeswarm(m, X_test_sc, feat_cols,
+                f"SHAP Beeswarm — XGBoost",
+                os.path.join(out_dir, "shap_xgboost_beeswarm.png"))
+        except Exception as e: print(f"   ⚠  {e}")
+    else: print("   ⚠  Not found")
 
-# ══════════════════════════════════════════════════════════════
-# STEP 5: SHAP — SVR (KernelExplainer — sample based)
-# ══════════════════════════════════════════════════════════════
-print("\n" + "=" * 60)
-print("STEP 5: SHAP for SVR (KernelExplainer)")
-print("=" * 60)
-print("  ⏳ SVR SHAP is slow — using 50 background samples...")
+    # ── 3. Gradient Boosting ──────────────────────────────────
+    print(f"\n  [3/6] Gradient Boosting — TreeExplainer")
+    m = load_pkl(os.path.join(mdl_dir, "gradient_boosting_model.pkl"))
+    if m:
+        try:
+            sv = shap.TreeExplainer(m).shap_values(X_test_sc)
+            all_imp["Gradient Boosting"] = plot_bar(sv, feat_cols,
+                f"SHAP — Gradient Boosting ({exp_info['label']})",
+                os.path.join(out_dir, "shap_gradient_boosting_bar.png"), "#27AE60")
+            plot_beeswarm(m, X_test_sc, feat_cols,
+                f"SHAP Beeswarm — Gradient Boosting",
+                os.path.join(out_dir, "shap_gradient_boosting_beeswarm.png"))
+        except Exception as e: print(f"   ⚠  {e}")
+    else: print("   ⚠  Not found")
 
-background = shap.sample(X_train_sc, 50)
-explainer_svr = shap.KernelExplainer(svr.predict, background)
-shap_vals_svr = explainer_svr.shap_values(X_test_sc[:30], nsamples=100)
+    # ── 4. SVR ────────────────────────────────────────────────
+    print(f"\n  [4/6] SVR — KernelExplainer")
+    m = load_pkl(os.path.join(mdl_dir, "svr_model.pkl"))
+    if m:
+        try:
+            bg   = shap.sample(X_test_sc, min(50, len(X_test_sc)), random_state=42)
+            samp = X_test_sc[:min(100, len(X_test_sc))]
+            expl = shap.KernelExplainer(m.predict, bg)
+            sv   = expl.shap_values(samp, nsamples=100)
+            all_imp["SVR"] = plot_bar(sv, feat_cols,
+                f"SHAP — SVR ({exp_info['label']})",
+                os.path.join(out_dir, "shap_svr_bar.png"), "#8E44AD")
+        except Exception as e: print(f"   ⚠  {e}")
+    else: print("   ⚠  Not found")
 
-mean_shap_svr = pd.DataFrame({
-    "Feature": feat_names,
-    "SHAP_Importance": np.abs(shap_vals_svr).mean(axis=0)
-}).sort_values("SHAP_Importance", ascending=False)
+    # ── 5. Neural Network — KernelExplainer ──────────────────
+    print(f"\n  [5/6] Neural Network — KernelExplainer")
+    nn_path = os.path.join(mdl_dir, "nn_model.keras")
+    if os.path.exists(nn_path):
+        try:
+            nn = load_model(nn_path)
+            sv = shap_nn_kernel(nn, X_test_sc)
+            all_imp["Neural Network"] = plot_bar(sv, feat_cols,
+                f"SHAP — Neural Network ({exp_info['label']})",
+                os.path.join(out_dir, "shap_nn_bar.png"), "#16A085")
+        except Exception as e: print(f"   ⚠  NN error: {e}")
+    else: print("   ⚠  nn_model.keras not found")
 
-print("  Top 10 Features (SVR):")
-print(mean_shap_svr.head(10).to_string(index=False))
+    # ── 6. LSTM — KernelExplainer (sequence) ─────────────────
+    print(f"\n  [6/6] LSTM — KernelExplainer (sequence)")
+    lstm_path = os.path.join(mdl_dir, "lstm_model.keras")
+    if os.path.exists(lstm_path):
+        try:
+            lstm = load_model(lstm_path)
+            sv2d = shap_lstm_kernel(lstm, X_test_sc)
+            all_imp["LSTM"] = plot_bar(sv2d, feat_cols,
+                f"SHAP — LSTM ({exp_info['label']})",
+                os.path.join(out_dir, "shap_lstm_bar.png"), "#E74C3C")
+        except Exception as e: print(f"   ⚠  LSTM error: {e}")
+    else: print("   ⚠  lstm_model.keras not found")
 
-fig, ax = plt.subplots(figsize=(10, 7))
-top10_svr = mean_shap_svr.head(10)
-ax.barh(top10_svr["Feature"][::-1], top10_svr["SHAP_Importance"][::-1],
-        color="gray", edgecolor="black")
-ax.set_title("SVR — Top 10 Feature Importance (SHAP)")
-ax.set_xlabel("Mean |SHAP Value|")
-ax.grid(True, axis="x")
-plt.tight_layout()
-plt.savefig(os.path.join(PLOTS_DIR, "shap_svr_bar.png"), dpi=150, bbox_inches="tight")
-plt.close()
-print("  ✅ Saved: plots/shap/shap_svr_bar.png")
+    # ── All Models Comparison ─────────────────────────────────
+    if len(all_imp) >= 2:
+        print(f"\n  [Comparison Plot]")
+        try:
+            imp_df  = pd.DataFrame(all_imp, index=feat_cols)
+            imp_df["avg"] = imp_df.mean(axis=1)
+            top_f   = imp_df.nlargest(TOP_N, "avg").index.tolist()
+            plot_df = imp_df.loc[top_f].drop(columns="avg")
+            colors  = ["#E67E22","#2980B9","#27AE60","#8E44AD","#16A085","#E74C3C"]
+            x, w    = np.arange(len(top_f)), 0.13
+            fig, ax = plt.subplots(figsize=(14, 6))
+            fig.patch.set_facecolor(BG); ax.set_facecolor(BG)
+            for i, (col, clr) in enumerate(zip(plot_df.columns, colors)):
+                ax.bar(x + i*w, plot_df[col], w, label=col, color=clr, alpha=0.85)
+            ax.set_xticks(x + w*(len(plot_df.columns)-1)/2)
+            ax.set_xticklabels(top_f, rotation=45, ha="right", fontsize=8)
+            ax.set_ylabel("Mean |SHAP Value|", fontsize=10)
+            ax.set_title(f"SHAP All Models — {exp_info['label']}", fontsize=12, fontweight="bold")
+            ax.legend(fontsize=9)
+            ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+            ax.grid(axis="y", linestyle="--", alpha=0.4)
+            plt.tight_layout()
+            fig.savefig(os.path.join(out_dir, "shap_all_comparison.png"), dpi=120, bbox_inches="tight")
+            plt.close(fig)
+            print("   ✅ shap_all_comparison.png")
 
-# ══════════════════════════════════════════════════════════════
-# STEP 6: Combined SHAP Comparison — All 4 ML Models
-# ══════════════════════════════════════════════════════════════
-print("\n" + "=" * 60)
-print("STEP 6: Combined SHAP — Top Features Across Models")
-print("=" * 60)
+            imp_df.sort_values("avg", ascending=False).to_csv(
+                os.path.join(out_dir, "shap_feature_importance.csv"))
+            print("   ✅ shap_feature_importance.csv")
+        except Exception as e:
+            print(f"   ⚠  Comparison: {e}")
 
-# Get top 10 from each
-top_xgb = mean_shap_xgb.head(10).set_index("Feature")["SHAP_Importance"]
-top_rf  = mean_shap_rf.head(10).set_index("Feature")["SHAP_Importance"]
-top_gb  = mean_shap_gb.head(10).set_index("Feature")["SHAP_Importance"]
-top_svr = mean_shap_svr.head(10).set_index("Feature")["SHAP_Importance"]
+    print(f"\n  ✅ {exp_key} complete!")
 
-# Union of all top features
-all_top_features = list(set(
-    top_xgb.index.tolist() + top_rf.index.tolist() +
-    top_gb.index.tolist()  + top_svr.index.tolist()
-))
-
-compare_df = pd.DataFrame({
-    "XGBoost":          [mean_shap_xgb.set_index("Feature").loc[f, "SHAP_Importance"]
-                         if f in mean_shap_xgb["Feature"].values else 0
-                         for f in all_top_features],
-    "Random Forest":    [mean_shap_rf.set_index("Feature").loc[f, "SHAP_Importance"]
-                         if f in mean_shap_rf["Feature"].values else 0
-                         for f in all_top_features],
-    "Grad. Boosting":   [mean_shap_gb.set_index("Feature").loc[f, "SHAP_Importance"]
-                         if f in mean_shap_gb["Feature"].values else 0
-                         for f in all_top_features],
-    "SVR":              [mean_shap_svr.set_index("Feature").loc[f, "SHAP_Importance"]
-                         if f in mean_shap_svr["Feature"].values else 0
-                         for f in all_top_features],
-}, index=all_top_features)
-
-compare_df["Mean"] = compare_df.mean(axis=1)
-compare_df = compare_df.sort_values("Mean", ascending=False).head(15)
-compare_df.to_csv(os.path.join(DATA, "shap_feature_importance.csv"))
-print("  ✅ Saved: data/shap_feature_importance.csv")
-
-# Grouped bar chart
-fig, ax = plt.subplots(figsize=(14, 7))
-x      = np.arange(len(compare_df))
-width  = 0.2
-colors = ["black", "#555555", "#888888", "#bbbbbb"]
-models = ["XGBoost", "Random Forest", "Grad. Boosting", "SVR"]
-
-for i, (model, color) in enumerate(zip(models, colors)):
-    ax.bar(x + i*width, compare_df[model],
-           width, label=model, color=color, edgecolor="black", linewidth=0.5)
-
-ax.set_title("SHAP Feature Importance — All ML Models Comparison")
-ax.set_xlabel("Features")
-ax.set_ylabel("Mean |SHAP Value|")
-ax.set_xticks(x + width * 1.5)
-ax.set_xticklabels(compare_df.index, rotation=40, ha="right", fontsize=8)
-ax.legend()
-ax.grid(True, axis="y")
-plt.tight_layout()
-plt.savefig(os.path.join(PLOTS_DIR, "shap_all_models_comparison.png"),
-            dpi=150, bbox_inches="tight")
-plt.close()
-print("  ✅ Saved: plots/shap/shap_all_models_comparison.png")
-
-# ── Final Summary ─────────────────────────────────────────────
-print("\n" + "=" * 60)
-print("SHAP ANALYSIS COMPLETE")
-print("=" * 60)
-print(f"""
-  Saved Plots:
-    plots/shap/shap_xgb_bar.png
-    plots/shap/shap_xgb_beeswarm.png
-    plots/shap/shap_rf_bar.png
-    plots/shap/shap_gb_bar.png
-    plots/shap/shap_svr_bar.png
-    plots/shap/shap_all_models_comparison.png
-
-  Saved Data:
-    data/shap_feature_importance.csv
-
-  Top Features driving Bitcoin Volatility:
-""")
-print(compare_df[["Mean"]].head(10).round(4).to_string())
-print(f"""
-  Next Step → RAG (Retrieval-Augmented Generation)
+print("\n" + "="*60)
+print("  ALL SHAP DONE!")
+print("="*60)
+print("""
+  shap/
+  ├── exp1/  shap_random_forest_bar/beeswarm
+  │          shap_xgboost_bar/beeswarm
+  │          shap_gradient_boosting_bar/beeswarm
+  │          shap_svr_bar
+  │          shap_nn_bar         ← NEW
+  │          shap_lstm_bar        ← NEW
+  │          shap_all_comparison
+  │          shap_feature_importance.csv
+  ├── exp2/  (same)
+  └── exp3/  (same)
 """)

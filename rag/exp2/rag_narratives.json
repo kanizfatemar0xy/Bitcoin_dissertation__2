@@ -1,0 +1,162 @@
+[
+  {
+    "rank": 1,
+    "date": "2022-11-10",
+    "volatility": 8.460246,
+    "price": 17586.77,
+    "daily_return": 10.7425,
+    "vol_level": "EXTREME",
+    "market_context": "FTX collapse \u2014 major crypto crisis",
+    "tweet_sentiment": -0.1289,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-10 | Close Price: $17,587 | Daily Return: 1074.25% | Volatility: 8.460246 | Tweet Sentiment: -0.129 (Negative \ud83d\udcc9)"
+    ]
+  },
+  {
+    "rank": 2,
+    "date": "2022-11-14",
+    "volatility": 8.066039,
+    "price": 16618.2,
+    "daily_return": 1.6194,
+    "vol_level": "EXTREME",
+    "market_context": "FTX collapse \u2014 major crypto crisis",
+    "tweet_sentiment": 0.0124,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-11-17 | Close Price: $16,688 | Daily Return: 10.85% | Volatility: 1.910561 | Tweet Sentiment: -0.232 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | Tweet Sentiment: -0.243 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative \ud83d\udcc9)"
+    ]
+  },
+  {
+    "rank": 3,
+    "date": "2022-06-19",
+    "volatility": 8.043077,
+    "price": 20553.27,
+    "daily_return": 8.0748,
+    "vol_level": "EXTREME",
+    "market_context": "Celsius Network froze withdrawals \u2014 bear market",
+    "tweet_sentiment": 0.3179,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-06-19 | Close Price: $20,553 | Daily Return: 807.48% | Volatility: 8.043077 | Tweet Sentiment: 0.318 (Positive \ud83d\udcc8)",
+      "Date: 2022-06-20 | Close Price: $20,600 | Daily Return: 22.51% | Volatility: 5.859275 | Tweet Sentiment: -0.205 (Negative \ud83d\udcc9)",
+      "Date: 2022-06-21 | Close Price: $20,711 | Daily Return: 53.91% | Volatility: 5.890373 | Tweet Sentiment: -0.096 (Neutral \u27a1\ufe0f)"
+    ]
+  },
+  {
+    "rank": 4,
+    "date": "2022-11-11",
+    "volatility": 7.994692,
+    "price": 17034.29,
+    "daily_return": -3.1415,
+    "vol_level": "EXTREME",
+    "market_context": "FTX collapse \u2014 major crypto crisis",
+    "tweet_sentiment": -0.2072,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-10 | Close Price: $17,587 | Daily Return: 1074.25% | Volatility: 8.460246 | Tweet Sentiment: -0.129 (Negative \ud83d\udcc9)"
+    ]
+  },
+  {
+    "rank": 5,
+    "date": "2022-11-12",
+    "volatility": 7.887114,
+    "price": 16799.19,
+    "daily_return": -1.3802,
+    "vol_level": "EXTREME",
+    "market_context": "FTX collapse \u2014 major crypto crisis",
+    "tweet_sentiment": -0.6616,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | Tweet Sentiment: -0.079 (Neutral \u27a1\ufe0f)",
+      "Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | Tweet Sentiment: -0.662 (Negative \ud83d\udcc9)"
+    ]
+  },
+  {
+    "rank": 6,
+    "date": "2022-11-13",
+    "volatility": 7.867269,
+    "price": 16353.37,
+    "daily_return": -2.6538,
+    "vol_level": "EXTREME",
+    "market_context": "FTX collapse \u2014 major crypto crisis",
+    "tweet_sentiment": 0.0001,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | Tweet Sentiment: -0.207 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | Tweet Sentiment: -0.079 (Neutral \u27a1\ufe0f)",
+      "Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | Tweet Sentiment: -0.243 (Negative \ud83d\udcc9)"
+    ]
+  },
+  {
+    "rank": 7,
+    "date": "2022-11-15",
+    "volatility": 7.496005,
+    "price": 16884.61,
+    "daily_return": 1.6031,
+    "vol_level": "EXTREME",
+    "market_context": "FTX collapse \u2014 major crypto crisis",
+    "tweet_sentiment": -0.0786,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-11-18 | Close Price: $16,698 | Daily Return: 6.15% | Volatility: 1.594537 | Tweet Sentiment: -0.112 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | Tweet Sentiment: -0.243 (Negative \ud83d\udcc9)",
+      "Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | Tweet Sentiment: -0.079 (Neutral \u27a1\ufe0f)"
+    ]
+  },
+  {
+    "rank": 8,
+    "date": "2022-03-04",
+    "volatility": 7.122572,
+    "price": 39137.61,
+    "daily_return": -7.8069,
+    "vol_level": "EXTREME",
+    "market_context": "Russia-Ukraine war \u2014 market uncertainty",
+    "tweet_sentiment": -0.0369,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-03-06 | Close Price: $38,420 | Daily Return: -248.88% | Volatility: 7.034519 | Tweet Sentiment: 0.200 (Positive \ud83d\udcc8)",
+      "Date: 2022-03-03 | Close Price: $42,452 | Daily Return: -335.20% | Volatility: 6.198301 | Tweet Sentiment: 0.049 (Neutral \u27a1\ufe0f)",
+      "Date: 2022-03-04 | Close Price: $39,138 | Daily Return: -780.69% | Volatility: 7.122572 | Tweet Sentiment: -0.037 (Neutral \u27a1\ufe0f)"
+    ]
+  },
+  {
+    "rank": 9,
+    "date": "2022-03-05",
+    "volatility": 7.121458,
+    "price": 39400.59,
+    "daily_return": 0.6719,
+    "vol_level": "EXTREME",
+    "market_context": "Russia-Ukraine war \u2014 market uncertainty",
+    "tweet_sentiment": -0.1647,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-03-06 | Close Price: $38,420 | Daily Return: -248.88% | Volatility: 7.034519 | Tweet Sentiment: 0.200 (Positive \ud83d\udcc8)",
+      "Date: 2022-03-03 | Close Price: $42,452 | Daily Return: -335.20% | Volatility: 6.198301 | Tweet Sentiment: 0.049 (Neutral \u27a1\ufe0f)",
+      "Date: 2022-03-08 | Close Price: $38,737 | Daily Return: 177.40% | Volatility: 3.142611 | Tweet Sentiment: 0.263 (Positive \ud83d\udcc8)"
+    ]
+  },
+  {
+    "rank": 10,
+    "date": "2022-03-06",
+    "volatility": 7.034519,
+    "price": 38419.98,
+    "daily_return": -2.4888,
+    "vol_level": "EXTREME",
+    "market_context": "Russia-Ukraine war \u2014 market uncertainty",
+    "tweet_sentiment": 0.1998,
+    "news_sentiment": null,
+    "retrieved_docs": [
+      "Date: 2022-03-08 | Close Price: $38,737 | Daily Return: 177.40% | Volatility: 3.142611 | Tweet Sentiment: 0.263 (Positive \ud83d\udcc8)",
+      "Date: 2022-03-06 | Close Price: $38,420 | Daily Return: -248.88% | Volatility: 7.034519 | Tweet Sentiment: 0.200 (Positive \ud83d\udcc8)",
+      "Date: 2022-03-07 | Close Price: $38,062 | Daily Return: -93.17% | Volatility: 3.332779 | Tweet Sentiment: -0.173 (Negative \ud83d\udcc9)"
+    ]
+  }
+]

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Bitcoin XAI &amp; RAG Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body{background:#f0f2f5;font-family:'Segoe UI',sans-serif;}
+    .navbar{background:#1a237e!important;padding:12px 24px;}
+    .navbar-brand{color:#fff!important;font-weight:700;font-size:1.1rem;}
+    .nav-badge{border:1px solid #fff;color:#fff;font-size:.75rem;padding:3px 12px;border-radius:20px;margin-left:12px;}
+    .main-card{background:#fff;border-radius:12px;padding:2.5rem 2.8rem;max-width:760px;margin:60px auto;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+    .main-card h2{color:#1a237e;font-weight:700;font-size:1.9rem;text-align:center;margin-bottom:10px;}
+    .subtitle{text-align:center;color:#555;font-size:.92rem;margin-bottom:2rem;}
+    label{font-weight:600;color:#333;margin-bottom:6px;display:block;}
+    .form-control,.form-select{border:1px solid #d0d5dd;border-radius:8px;padding:11px 14px;font-size:.95rem;}
+    .form-control:focus,.form-select:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(26,35,126,.1);}
+    .range-hint{font-size:.78rem;color:#888;margin-top:4px;}
+    .any-date-note{font-size:.75rem;color:#1565c0;margin-top:3px;}
+    .exp-info{background:#e8eaf6;border-left:3px solid #1a237e;border-radius:0 6px 6px 0;padding:8px 12px;font-size:.8rem;color:#1a237e;margin-top:6px;display:none;}
+    .btn-run{background:#1a237e;color:#fff;width:100%;padding:13px;font-size:1rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:background .2s;margin-top:8px;}
+    .btn-run:hover{background:#283593;}
+    #loadingOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:14px;}
+    #loadingOverlay.show{display:flex;}
+    .spinner-border{width:3rem;height:3rem;border-width:4px;color:#fff;}
+    .loading-text{color:#fff;font-size:1rem;font-weight:500;}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <span class="navbar-brand">Bitcoin Volatility Predictor</span>
+  <span class="nav-badge">Powered by XAI &amp; RAG</span>
+</nav>
+
+<div class="main-card">
+  <h2>Predict Market Volatility</h2>
+  <p class="subtitle">Select an experiment, date, and AI model to analyze Bitcoin price volatility and forecast the next day's market behavior.</p>
+  <form method="POST" action="/analyze" onsubmit="showLoading()">
+    <div class="mb-3">
+      <label>Select Experiment</label>
+      <select name="experiment" id="expSelect" class="form-select" onchange="onExpChange(this)">
+        {% for key, label in experiments.items() %}
+        <option value="{{ key }}" {% if key=='exp3' %}selected{% endif %}>{{ key.upper() }} — {{ label }}</option>
+        {% endfor %}
+      </select>
+      <div class="exp-info" id="expInfo"></div>
+    </div>
+    <div class="mb-3">
+      <label>Select Date</label>
+      <input type="date" name="target_date" id="dateInput" class="form-control" required/>
+      <div class="range-hint" id="rangeHint">Loading dataset range...</div>
+      <div class="any-date-note">💡 Dataset range ke bahar date select karo — nearest data se predict karega</div>
+    </div>
+    <div class="mb-4">
+      <label>Select AI Model</label>
+      <select name="model_choice" class="form-select">
+        {% for key, label in models.items() %}
+        <option value="{{ key }}" {% if key=='gradient_boosting' %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn-run">Run AI Prediction</button>
+  </form>
+</div>
+
+<div id="loadingOverlay">
+  <div class="spinner-border" role="status"></div>
+  <div class="loading-text">Running AI prediction model...</div>
+</div>
+
+<script>
+const EXP_INFO={
+  exp1:"Uses Price + News Sentiment. Dataset: Jan 2021 – Feb 2023",
+  exp2:"Uses Price + Tweet Sentiment. Dataset: Nov 2021 – Sep 2024",
+  exp3:"Uses Price + Tweets + News. Dataset: Dec 2021 – Feb 2023",
+};
+function showLoading(){document.getElementById("loadingOverlay").classList.add("show");}
+function onExpChange(sel){
+  const info=document.getElementById("expInfo");
+  info.style.display="block"; info.textContent=EXP_INFO[sel.value]||"";
+  fetchDateRange(sel.value);
+}
+async function fetchDateRange(k){
+  try{
+    const d=await(await fetch(`/api/date_range/${k}`)).json();
+    document.getElementById("rangeHint").textContent=`Dataset range: ${d.min} → ${d.max}`;
+  }catch{document.getElementById("rangeHint").textContent="Could not load date range.";}
+}
+window.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("dateInput").value=new Date().toISOString().split("T")[0];
+  onExpChange(document.getElementById("expSelect"));
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

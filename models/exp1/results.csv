@@ -1,0 +1,7 @@
+model,R2,RMSE,MAE,experiment
+Random Forest,0.9942,0.115191,0.051986,exp1
+XGBoost,0.9973,0.079015,0.039239,exp1
+Gradient Boosting,0.9987,0.05371,0.024718,exp1
+SVR,0.8558,0.575345,0.398402,exp1
+LSTM,-0.1584,1.67986,1.459671,exp1
+Neural Network,0.9685,0.268817,0.20833,exp1

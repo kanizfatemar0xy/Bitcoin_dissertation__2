@@ -1,0 +1,11 @@
+Rank,Date,Volatility,Price_USD,Daily_Return_Pct,Vol_Level,Market_Context,Tweet_Sentiment,News_Sentiment
+1,2021-05-25,9.488536,38402.22,-78.48,EXTREME,China crypto mining ban — massive crash,N/A,-0.02
+2,2021-05-24,9.487175,38705.98,1131.82,EXTREME,China crypto mining ban — massive crash,N/A,-0.0829
+3,2022-11-10,8.460246,17586.77,1074.25,EXTREME,FTX collapse — major crypto crisis,N/A,0.0
+4,2022-11-14,8.066039,16618.2,161.94,EXTREME,FTX collapse — major crypto crisis,N/A,0.02
+5,2022-06-19,8.043077,20553.27,807.48,EXTREME,Celsius Network froze withdrawals — bear market,N/A,0.1192
+6,2022-11-11,7.994692,17034.29,-314.15,EXTREME,FTX collapse — major crypto crisis,N/A,0.0018
+7,2022-11-12,7.887114,16799.19,-138.02,EXTREME,FTX collapse — major crypto crisis,N/A,-0.058
+8,2022-11-13,7.867269,16353.37,-265.38,EXTREME,FTX collapse — major crypto crisis,N/A,0.0606
+9,2021-05-23,7.769019,34770.58,-736.89,EXTREME,China crypto mining ban — massive crash,N/A,0.0473
+10,2021-05-26,7.716001,39294.2,232.27,EXTREME,China crypto mining ban — massive crash,N/A,-0.0712

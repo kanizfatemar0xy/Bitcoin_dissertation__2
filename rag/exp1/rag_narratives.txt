@@ -1,0 +1,224 @@
+RAG VOLATILITY ANALYSIS — EXPERIMENT 1 — PRICE + NEWS
+Generated for top 10 high-volatility events
+=================================================================
+
+
+=================================================================
+EVENT #1 — May 25, 2021
+=================================================================
+Volatility Level  : EXTREME (9.488536)
+Bitcoin Price     : $38,402.22
+Daily Return      : -78.48%
+
+[MARKET CONTEXT]
+  China crypto mining ban — massive crash
+
+[NEWS SIGNAL]
+  News Sentiment    : -0.020 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2021-05-27 | Close Price: $38,437 | Daily Return: -218.16% | Volatility: 6.624025 | News Sentiment: 0.094 (Neutral ➡️)
+  [2] Date: 2021-05-24 | Close Price: $38,706 | Daily Return: 1131.82% | Volatility: 9.487175 | News Sentiment: -0.083 (Neutral ➡️)
+  [3] Date: 2021-05-25 | Close Price: $38,402 | Daily Return: -78.48% | Volatility: 9.488536 | News Sentiment: -0.020 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 78.5% price drop on this date aligns with: China crypto mining ban — massive crash.
+
+=================================================================
+EVENT #2 — May 24, 2021
+=================================================================
+Volatility Level  : EXTREME (9.487175)
+Bitcoin Price     : $38,705.98
+Daily Return      : +1131.82%
+
+[MARKET CONTEXT]
+  China crypto mining ban — massive crash
+
+[NEWS SIGNAL]
+  News Sentiment    : -0.083 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2021-05-27 | Close Price: $38,437 | Daily Return: -218.16% | Volatility: 6.624025 | News Sentiment: 0.094 (Neutral ➡️)
+  [2] Date: 2021-05-24 | Close Price: $38,706 | Daily Return: 1131.82% | Volatility: 9.487175 | News Sentiment: -0.083 (Neutral ➡️)
+  [3] Date: 2021-05-21 | Close Price: $37,305 | Daily Return: -852.82% | Volatility: 7.591724 | News Sentiment: 0.059 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 1131.8% price gain on this date aligns with: China crypto mining ban — massive crash.
+
+=================================================================
+EVENT #3 — November 10, 2022
+=================================================================
+Volatility Level  : EXTREME (8.460246)
+Bitcoin Price     : $17,586.77
+Daily Return      : +1074.25%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.000 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-13 | Close Price: $16,353 | Daily Return: -265.38% | Volatility: 7.867269 | News Sentiment: 0.061 (Neutral ➡️)
+  [3] Date: 2022-11-12 | Close Price: $16,799 | Daily Return: -138.02% | Volatility: 7.887114 | News Sentiment: -0.058 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 1074.2% price gain on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #4 — November 14, 2022
+=================================================================
+Volatility Level  : EXTREME (8.066039)
+Bitcoin Price     : $16,618.20
+Daily Return      : +161.94%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.020 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-17 | Close Price: $16,688 | Daily Return: 10.85% | Volatility: 1.910561 | News Sentiment: 0.040 (Neutral ➡️)
+  [2] Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | News Sentiment: 0.024 (Neutral ➡️)
+  [3] Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | News Sentiment: 0.031 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 161.9% price gain on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #5 — June 19, 2022
+=================================================================
+Volatility Level  : EXTREME (8.043077)
+Bitcoin Price     : $20,553.27
+Daily Return      : +807.48%
+
+[MARKET CONTEXT]
+  Celsius Network froze withdrawals — bear market
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.119 — Positive 📈
+  → Positive news coverage may have driven price upward.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-06-20 | Close Price: $20,600 | Daily Return: 22.51% | Volatility: 5.859275 | News Sentiment: -0.027 (Neutral ➡️)
+  [2] Date: 2022-06-17 | Close Price: $20,471 | Daily Return: 44.07% | Volatility: 6.279786 | News Sentiment: 0.027 (Neutral ➡️)
+  [3] Date: 2022-06-22 | Close Price: $19,987 | Daily Return: -349.37% | Volatility: 5.848798 | News Sentiment: 0.070 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 807.5% price gain on this date aligns with: Celsius Network froze withdrawals — bear market.
+
+=================================================================
+EVENT #6 — November 11, 2022
+=================================================================
+Volatility Level  : EXTREME (7.994692)
+Bitcoin Price     : $17,034.29
+Daily Return      : -314.15%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.002 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-13 | Close Price: $16,353 | Daily Return: -265.38% | Volatility: 7.867269 | News Sentiment: 0.061 (Neutral ➡️)
+  [3] Date: 2022-11-14 | Close Price: $16,618 | Daily Return: 161.94% | Volatility: 8.066039 | News Sentiment: 0.020 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 314.1% price drop on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #7 — November 12, 2022
+=================================================================
+Volatility Level  : EXTREME (7.887114)
+Bitcoin Price     : $16,799.19
+Daily Return      : -138.02%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[NEWS SIGNAL]
+  News Sentiment    : -0.058 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | News Sentiment: 0.024 (Neutral ➡️)
+  [3] Date: 2022-11-14 | Close Price: $16,618 | Daily Return: 161.94% | Volatility: 8.066039 | News Sentiment: 0.020 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 138.0% price drop on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #8 — November 13, 2022
+=================================================================
+Volatility Level  : EXTREME (7.867269)
+Bitcoin Price     : $16,353.37
+Daily Return      : -265.38%
+
+[MARKET CONTEXT]
+  FTX collapse — major crypto crisis
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.061 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2022-11-11 | Close Price: $17,034 | Daily Return: -314.15% | Volatility: 7.994692 | News Sentiment: 0.002 (Neutral ➡️)
+  [2] Date: 2022-11-15 | Close Price: $16,885 | Daily Return: 160.31% | Volatility: 7.496005 | News Sentiment: 0.024 (Neutral ➡️)
+  [3] Date: 2022-11-16 | Close Price: $16,669 | Daily Return: -127.44% | Volatility: 4.772985 | News Sentiment: 0.031 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 265.4% price drop on this date aligns with: FTX collapse — major crypto crisis.
+
+=================================================================
+EVENT #9 — May 23, 2021
+=================================================================
+Volatility Level  : EXTREME (7.769019)
+Bitcoin Price     : $34,770.58
+Daily Return      : -736.89%
+
+[MARKET CONTEXT]
+  China crypto mining ban — massive crash
+
+[NEWS SIGNAL]
+  News Sentiment    : 0.047 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2021-05-24 | Close Price: $38,706 | Daily Return: 1131.82% | Volatility: 9.487175 | News Sentiment: -0.083 (Neutral ➡️)
+  [2] Date: 2021-05-21 | Close Price: $37,305 | Daily Return: -852.82% | Volatility: 7.591724 | News Sentiment: 0.059 (Neutral ➡️)
+  [3] Date: 2021-05-25 | Close Price: $38,402 | Daily Return: -78.48% | Volatility: 9.488536 | News Sentiment: -0.020 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 736.9% price drop on this date aligns with: China crypto mining ban — massive crash.
+
+=================================================================
+EVENT #10 — May 26, 2021
+=================================================================
+Volatility Level  : EXTREME (7.716001)
+Bitcoin Price     : $39,294.20
+Daily Return      : +232.27%
+
+[MARKET CONTEXT]
+  China crypto mining ban — massive crash
+
+[NEWS SIGNAL]
+  News Sentiment    : -0.071 — Neutral ➡️
+  → Mixed news signals — institutional/macro factors dominant.
+
+[RETRIEVED CONTEXT — RAG]
+  [1] Date: 2021-05-27 | Close Price: $38,437 | Daily Return: -218.16% | Volatility: 6.624025 | News Sentiment: 0.094 (Neutral ➡️)
+  [2] Date: 2021-05-24 | Close Price: $38,706 | Daily Return: 1131.82% | Volatility: 9.487175 | News Sentiment: -0.083 (Neutral ➡️)
+  [3] Date: 2021-05-25 | Close Price: $38,402 | Daily Return: -78.48% | Volatility: 9.488536 | News Sentiment: -0.020 (Neutral ➡️)
+
+[ANALYSIS SUMMARY]
+  This was a significant volatility spike (EXTREME). The 232.3% price gain on this date aligns with: China crypto mining ban — massive crash.

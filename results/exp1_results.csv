@@ -1,0 +1,7 @@
+Experiment,Model,R2,RMSE,MAE,Train_Rows,Test_Rows
+Exp 1 — Price + News,Random Forest,0.9942,0.115191,0.051986,604,151
+Exp 1 — Price + News,XGBoost,0.9973,0.079015,0.039239,604,151
+Exp 1 — Price + News,Gradient Boosting,0.9987,0.05371,0.024718,604,151
+Exp 1 — Price + News,SVR,0.8558,0.575345,0.398402,604,151
+Exp 1 — Price + News,LSTM,-0.1584,1.67986,1.459671,604,141
+Exp 1 — Price + News,Neural Network,0.9685,0.268817,0.20833,604,151

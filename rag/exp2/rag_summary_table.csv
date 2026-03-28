@@ -1,0 +1,11 @@
+Rank,Date,Volatility,Price_USD,Daily_Return_Pct,Vol_Level,Market_Context,Tweet_Sentiment,News_Sentiment
+1,2022-11-10,8.460246,17586.77,1074.25,EXTREME,FTX collapse — major crypto crisis,-0.1289,N/A
+2,2022-11-14,8.066039,16618.2,161.94,EXTREME,FTX collapse — major crypto crisis,0.0124,N/A
+3,2022-06-19,8.043077,20553.27,807.48,EXTREME,Celsius Network froze withdrawals — bear market,0.3179,N/A
+4,2022-11-11,7.994692,17034.29,-314.15,EXTREME,FTX collapse — major crypto crisis,-0.2072,N/A
+5,2022-11-12,7.887114,16799.19,-138.02,EXTREME,FTX collapse — major crypto crisis,-0.6616,N/A
+6,2022-11-13,7.867269,16353.37,-265.38,EXTREME,FTX collapse — major crypto crisis,0.0001,N/A
+7,2022-11-15,7.496005,16884.61,160.31,EXTREME,FTX collapse — major crypto crisis,-0.0786,N/A
+8,2022-03-04,7.122572,39137.61,-780.69,EXTREME,Russia-Ukraine war — market uncertainty,-0.0369,N/A
+9,2022-03-05,7.121458,39400.59,67.19,EXTREME,Russia-Ukraine war — market uncertainty,-0.1647,N/A
+10,2022-03-06,7.034519,38419.98,-248.88,EXTREME,Russia-Ukraine war — market uncertainty,0.1998,N/A
