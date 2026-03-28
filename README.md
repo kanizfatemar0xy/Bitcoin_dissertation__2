@@ -28,7 +28,7 @@
 Traditional Bitcoin volatility models are **black boxes** — they predict *when* volatility happens but can't explain *why*. This project solves that.
 
 | Challenge | Our Solution |
-|-----------|-------------|
+|-----------|------------- |
 | Black-box AI models |  SHAP Explainable AI — shows which features drive predictions |
 | No context for volatility spikes |  RAG Pipeline — generates human-readable narrative explanations |
 | Single-source prediction |  3 Experiments — Price only, +News, +Tweets, +All combined |
@@ -49,15 +49,15 @@ Traditional Bitcoin volatility models are **black boxes** — they predict *when
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
-║                         DATA LAYER                                  ║
-║    Yahoo Finance (Price)   Kaggle Tweets   Kaggle News       ║
+║                         DATA LAYER                                   ║
+║    Yahoo Finance (Price)   Kaggle Tweets   Kaggle News               ║
 ╚══════════════════════════════╦═══════════════════════════════════════╝
                                ║
                                ▼
-╔══════════════════════════════════════════════════════════════════════╗
-║                    FEATURE ENGINEERING                              ║
-║  Daily Returns · 7d/30d Rolling Volatility · MA7 · MA30            ║
-║  Lag Features (1,2,3,7 days) · TextBlob Sentiment · Price Range    ║
+╔═══════════════════════════════════════════════════════════════════════╗
+║                    FEATURE ENGINEERING                                ║
+║  Daily Returns · 7d/30d Rolling Volatility · MA7 · MA30               ║
+║  Lag Features (1,2,3,7 days) · TextBlob Sentiment · Price Range       ║
 ╚════════════╦══════════════════╦═══════════════════════════════════════╝
              ║                  ║                  ║
              ▼                  ▼                  ▼
@@ -70,9 +70,9 @@ Traditional Bitcoin volatility models are **black boxes** — they predict *when
                                ║
                                ▼
 ╔══════════════════════════════════════════════════════════════════════╗
-║                        6 ML MODELS                                  ║
-║  Random Forest · XGBoost · Gradient Boosting · SVR · LSTM · NN    ║
-╚════════════╦═════════════════════════════════════╦══════════════════╝
+║                        6 ML MODELS                                   ║
+║  Random Forest · XGBoost · Gradient Boosting · SVR · LSTM · NN       ║
+╚════════════╦═════════════════════════════════════╦═══════════════════╝
              ║                                     ║
              ▼                                     ▼
     ┌─────────────────┐                  ┌──────────────────────┐
@@ -114,11 +114,11 @@ Three controlled experiments with progressively richer sentiment data:
 | | **Exp 1** | **Exp 2** | **Exp 3** |
 |---|-----------|-----------|-----------|
 | **Data** | Price + News | Price + Tweets | Price + Tweets + News |
-| **Rows** | ~755 | ~858 | 429 |
-| **Features** | ~47 | ~47 | 43 |
-| **Train / Test** | ~604 / ~151 | ~686 / ~172 | 343 / 86 |
+| **Rows** | 755 | 858 | 429 |
+| **Features** | 47 | 47 | 43 |
+| **Train / Test** | 604 / 151 | 686 / 172 | 343 / 86 |
 | **Date Range** | Jan 2021 – Feb 2023 | Nov 2021 – Sep 2024 | Dec 2021 – Feb 2023 |
-| **Coverage** | ~26 months | ~34 months | ~14 months |
+| **Coverage** | 26 months | 34 months | 14 months |
 
 > All experiments use **80/20 chronological split** — no data leakage.
 
@@ -242,11 +242,11 @@ Step 4 → Save as .txt, .json, .csv + visualisation plots
 
 | Date | Volatility Level | Market Context |
 |------|----------------|----------------|
-| 2022-05-xx | EXTREME | Terra/LUNA collapse — crypto market crash |
-| 2022-11-xx | EXTREME | FTX collapse — major crypto crisis |
-| 2021-05-xx | HIGH | China crypto mining ban |
-| 2022-03-xx | HIGH | Russia-Ukraine war — market uncertainty |
-| 2021-11-xx | HIGH | Bitcoin new ATH near $69K |
+| 2022-05 | EXTREME | Terra/LUNA collapse — crypto market crash |
+| 2022-11 | EXTREME | FTX collapse — major crypto crisis |
+| 2021-05 | HIGH    | China crypto mining ban |
+| 2022-03 | HIGH    | Russia-Ukraine war — market uncertainty |
+| 2021-11 | HIGH    | Bitcoin new ATH near $69K |
 
 **Finding:** 5 of the top 10 high-volatility events aligned with **negative news sentiment**, supporting the hypothesis that negative sentiment amplifies volatility.
 
@@ -285,8 +285,8 @@ Bitcoin/
 │   ├── 1_price_data.csv              # Raw Bitcoin price (2021–2025)
 │   ├── 2_tweets_data.csv             # Raw tweet sentiment (daily)
 │   ├── 3_news_data.csv               # Raw news sentiment (daily)
-│   ├── master_price_news.csv         # Exp 1 — ~755 rows, ~47 features
-│   ├── master_price_tweets.csv       # Exp 2 — ~858 rows, ~47 features
+│   ├── master_price_news.csv         # Exp 1 — 755 rows, 47 features
+│   ├── master_price_tweets.csv       # Exp 2 — 858 rows, 47 features
 │   └── master_dataset.csv            # Exp 3 — 429 rows, 43 features
 │
 ├──  models/
@@ -372,22 +372,22 @@ pip install pandas numpy matplotlib scikit-learn xgboost tensorflow shap flask y
 ### 3. Run the pipeline — in order
 
 ```bash
-# Step 1 — Create master datasets (~2 min)
+# Step 1 — Create master datasets (2 min)
 py scripts/create_master_datasets.py
 
-# Step 2 — Generate EDA plots (~1 min)
+# Step 2 — Generate EDA plots (1 min)
 py scripts/generate_all_plots.py
 
-# Step 3 — Train all 18 models (~30–45 min)
+# Step 3 — Train all 18 models (30–45 min)
 py scripts/train_all_experiments.py
 
-# Step 4 — SHAP analysis (~20–30 min)
+# Step 4 — SHAP analysis (20–30 min)
 py scripts/shap_analysis.py
 
-# Step 5 — RAG pipeline (~2 min)
+# Step 5 — RAG pipeline (2 min)
 py scripts/rag_pipeline.py
 
-# Step 6 — Evaluate RMSE/MAE/R² (~5–10 min)
+# Step 6 — Evaluate RMSE/MAE/R² (5–10 min)
 py scripts/evaluate_all_experiments.py
 
 # Step 7 — Launch dashboard
