@@ -1,7 +1,7 @@
 """
 Script 3: train_all_experiments.py
 =====================================
-Teeno experiments pe 6 models train karta hai:
+Three experiments are trained in 6 models:
   - Random Forest
   - XGBoost
   - Gradient Boosting
@@ -15,7 +15,7 @@ Output:
   ├── exp2/  (Price + Tweets)
   └── exp3/  (Price + Tweets + News)
 
-Run karo:  py train_all_experiments.py
+Run:  py train_all_experiments.py
 """
 
 import pandas as pd
@@ -90,8 +90,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
 
     # ── Load dataset ──────────────────────────────────────────
     if not os.path.exists(exp_info["file"]):
-        print(f"  ⚠  File not found: {exp_info['file']}")
-        print(f"     Pehle create_master_datasets.py chalao!")
+        print(f"   File not found: {exp_info['file']}")
+        print(f"     Run_master_datasets.py")
         continue
 
     df = pd.read_csv(exp_info["file"], parse_dates=["Date"])
@@ -230,7 +230,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     all_results.extend(exp_results)
 
     best = max(exp_results, key=lambda x: x["R2"])
-    print(f"\n  ✅ {exp_key} done!  Best model: {best['model']} (R²={best['R2']})")
+    print(f"\n  {exp_key} done!  Best model: {best['model']} (R²={best['R2']})")
 
 # ─── Save combined results ────────────────────────────────────────────────────
 combined_path = os.path.join(MODELS_DIR, "all_experiments_results.csv")
@@ -257,4 +257,4 @@ print("""
   ├── exp3/   (same files)
   └── all_experiments_results.csv
 """)
-print("  ✅ Models saved!\n")
+print(" Models saved!\n")

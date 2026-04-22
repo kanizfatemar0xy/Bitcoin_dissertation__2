@@ -1,8 +1,8 @@
 """
 Script 6: evaluate_all_experiments.py
 =======================================
-Teeno experiments ke trained models ka
-RMSE, MAE, R² evaluate karta hai.
+ experiments on trained models
+RMSE, MAE, R² do the evaluation.
 
 Output:
   results/
@@ -21,7 +21,7 @@ Output:
           ├── exp1_random_forest.png
           ├── exp1_xgboost.png  ... (18 plots total)
 
-Run karo:  py evaluate_all_experiments.py
+Run :  py evaluate_all_experiments.py
 """
 
 import pandas as pd
@@ -99,7 +99,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     print(f"{'─'*62}")
 
     if not os.path.exists(exp_info["file"]):
-        print(f"  ⚠  Skipped — dataset not found")
+        print(f" Skipped — dataset not found")
         continue
 
     df = pd.read_csv(exp_info["file"], parse_dates=["Date"])
@@ -118,7 +118,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     scaler_y = load_pkl(os.path.join(mdl_dir, "y_scaler.pkl"))
 
     if scaler_X is None:
-        print(f"  ⚠  Scaler not found — run train_all_experiments.py first!")
+        print(f" Scaler not found — run train_all_experiments.py first!")
         continue
 
     X_test_sc = scaler_X.transform(X_test)
@@ -201,7 +201,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     # ── Save per-experiment CSV ────────────────────────────────
     exp_df = pd.DataFrame(exp_rows)
     exp_df.to_csv(os.path.join(RESULTS_DIR, f"{exp_key}_results.csv"), index=False)
-    print(f"\n  ✅ {exp_key}_results.csv saved")
+    print(f"\n {exp_key}_results.csv saved")
 
     # ── Per-experiment: 3-metric bar chart ───────────────────
     models     = exp_df["Model"].tolist()
@@ -238,7 +238,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     fig.savefig(os.path.join(PLOTS_DIR, f"{exp_key}_metrics_comparison.png"),
                 dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print(f"  ✅ {exp_key}_metrics_comparison.png saved")
+    print(f" {exp_key}_metrics_comparison.png saved")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # COMBINED — all experiments
@@ -247,7 +247,7 @@ if all_rows:
     combined_df = pd.DataFrame(all_rows)
     combined_df.to_csv(
         os.path.join(RESULTS_DIR, "all_experiments_comparison.csv"), index=False)
-    print(f"\n  ✅ all_experiments_comparison.csv saved")
+    print(f"\n   all_experiments_comparison.csv saved")
 
     model_names_all = [m for _, m, _, _ in MODEL_CONFIGS
                        if m in combined_df["Model"].values]
@@ -295,7 +295,7 @@ if all_rows:
         fig.savefig(os.path.join(PLOTS_DIR, f"all_{metric.lower()}_comparison.png"),
                     dpi=150, bbox_inches="tight")
         plt.close(fig)
-        print(f"  ✅ all_{metric.lower()}_comparison.png saved")
+        print(f" all_{metric.lower()}_comparison.png saved")
 
     # ── Print final summary table ──────────────────────────────
     print("\n" + "=" * 62)

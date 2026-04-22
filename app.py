@@ -281,9 +281,9 @@ def get_shap_img(exp_key, model_choice):
 
 def get_trend(cur, pred):
     if pred is None: return "— Could not compute","text-secondary"
-    if pred > cur*1.01: return "📈 Expected to Increase (Higher Risk)","text-danger"
-    if pred < cur*0.99: return "📉 Expected to Decrease (Market Stabilizing)","text-primary"
-    return "➡️ Expected to Remain Stable","text-secondary"
+    if pred > cur*1.01: return " Expected to Increase (Higher Risk)","text-danger"
+    if pred < cur*0.99: return "Expected to Decrease (Market Stabilizing)","text-primary"
+    return " Expected to Remain Stable","text-secondary"
 
 # ─── Routes ───────────────────────────────────────────────────────────────────
 @app.route("/")
@@ -330,7 +330,7 @@ def analyze():
             rs = (f"On {target_date} (Live), our system fetched real-time market data. "
                   f"The current Bitcoin price is ${price:,}. "
                   f"Using the {model_label} model, the predicted next-day volatility is {pvd}.")
-            rc = "📰 LIVE Top News Headlines (Today):\n" + "\n".join(f"- {n}" for n in live_news)
+            rc = " LIVE Top News Headlines (Today):\n" + "\n".join(f"- {n}" for n in live_news)
 
             return render_template("results.html",
                 date=f"{target_date} (LIVE DATA)", price=price,
@@ -357,7 +357,7 @@ def analyze():
              history_rows) = get_row_for_date(exp_key, target_date)
 
             date_note = "" if is_exact else (
-                f"⚠️ {target_date} is not in the dataset — "
+                f" {target_date} is not in the dataset — "
                 f"prediction based on nearest available date: {used_date}")
 
             ns = round(news_sent,  3) if news_sent  is not None else "N/A"

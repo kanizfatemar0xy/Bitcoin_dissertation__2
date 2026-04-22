@@ -2,7 +2,7 @@
 Script 4: shap_analysis.py — Final Fixed Version
 ==================================================
 LSTM error fix: TensorListStack gradient issue
-→ LSTM + NN dono ke liye sirf KernelExplainer use karo
+→ LSTM + NN  for this two just use KernelExplainer 
 
 - RF, XGB, GB  → TreeExplainer  (fast)
 - SVR          → KernelExplainer
@@ -60,7 +60,7 @@ def plot_bar(sv, feat_names, title, save_path, color="#4C72B0"):
     plt.tight_layout()
     fig.savefig(save_path, dpi=120, bbox_inches="tight")
     plt.close(fig)
-    print(f"   ✅ {os.path.basename(save_path)}")
+    print(f"   {os.path.basename(save_path)}")
     return ma
 
 def plot_beeswarm(model, X_sc, feat_names, title, save_path):
@@ -81,9 +81,9 @@ def plot_beeswarm(model, X_sc, feat_names, title, save_path):
         plt.tight_layout()
         fig.savefig(save_path, dpi=120, bbox_inches="tight")
         plt.close("all")
-        print(f"   ✅ {os.path.basename(save_path)}")
+        print(f" {os.path.basename(save_path)}")
     except Exception as e:
-        print(f"   ⚠  Beeswarm: {e}")
+        print(f"  Beeswarm: {e}")
 
 # ─── KernelExplainer wrappers ─────────────────────────────────────────────────
 def shap_nn_kernel(model, X_sc, n_bg=50, n_samp=100):
@@ -136,7 +136,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     print(f"\n{'─'*60}\n  {exp_info['label']}\n{'─'*60}")
 
     if not os.path.exists(exp_info["file"]):
-        print("  ⚠  Dataset not found"); continue
+        print("  Dataset not found"); continue
 
     df        = pd.read_csv(exp_info["file"], parse_dates=["Date"]).sort_values("Date").reset_index(drop=True)
     feat_cols = [c for c in df.columns if c not in ["Date", TARGET]]
@@ -147,7 +147,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     mdl_dir   = os.path.join(MODELS_DIR, exp_key)
     scaler_X  = load_pkl(os.path.join(mdl_dir, "scaler.pkl"))
     if scaler_X is None:
-        print("  ⚠  Scaler not found — run train_all_experiments.py first!"); continue
+        print("  Scaler not found — run train_all_experiments.py first!"); continue
 
     X_test_sc = scaler_X.transform(X_test)
     out_dir   = os.path.join(SHAP_DIR, exp_key)
@@ -166,8 +166,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
             plot_beeswarm(m, X_test_sc, feat_cols,
                 f"SHAP Beeswarm — Random Forest",
                 os.path.join(out_dir, "shap_random_forest_beeswarm.png"))
-        except Exception as e: print(f"   ⚠  {e}")
-    else: print("   ⚠  Not found")
+        except Exception as e: print(f"{e}")
+    else: print(" Not found")
 
     # ── 2. XGBoost ────────────────────────────────────────────
     print(f"\n  [2/6] XGBoost — TreeExplainer")
@@ -181,8 +181,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
             plot_beeswarm(m, X_test_sc, feat_cols,
                 f"SHAP Beeswarm — XGBoost",
                 os.path.join(out_dir, "shap_xgboost_beeswarm.png"))
-        except Exception as e: print(f"   ⚠  {e}")
-    else: print("   ⚠  Not found")
+        except Exception as e: print(f" {e}")
+    else: print("  Not found")
 
     # ── 3. Gradient Boosting ──────────────────────────────────
     print(f"\n  [3/6] Gradient Boosting — TreeExplainer")
@@ -196,8 +196,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
             plot_beeswarm(m, X_test_sc, feat_cols,
                 f"SHAP Beeswarm — Gradient Boosting",
                 os.path.join(out_dir, "shap_gradient_boosting_beeswarm.png"))
-        except Exception as e: print(f"   ⚠  {e}")
-    else: print("   ⚠  Not found")
+        except Exception as e: print(f" {e}")
+    else: print("  Not found")
 
     # ── 4. SVR ────────────────────────────────────────────────
     print(f"\n  [4/6] SVR — KernelExplainer")
@@ -211,8 +211,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
             all_imp["SVR"] = plot_bar(sv, feat_cols,
                 f"SHAP — SVR ({exp_info['label']})",
                 os.path.join(out_dir, "shap_svr_bar.png"), "#8E44AD")
-        except Exception as e: print(f"   ⚠  {e}")
-    else: print("   ⚠  Not found")
+        except Exception as e: print(f"  {e}")
+    else: print("   Not found")
 
     # ── 5. Neural Network — KernelExplainer ──────────────────
     print(f"\n  [5/6] Neural Network — KernelExplainer")
@@ -224,8 +224,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
             all_imp["Neural Network"] = plot_bar(sv, feat_cols,
                 f"SHAP — Neural Network ({exp_info['label']})",
                 os.path.join(out_dir, "shap_nn_bar.png"), "#16A085")
-        except Exception as e: print(f"   ⚠  NN error: {e}")
-    else: print("   ⚠  nn_model.keras not found")
+        except Exception as e: print(f" NN error: {e}")
+    else: print("  nn_model.keras not found")
 
     # ── 6. LSTM — KernelExplainer (sequence) ─────────────────
     print(f"\n  [6/6] LSTM — KernelExplainer (sequence)")
@@ -237,8 +237,8 @@ for exp_key, exp_info in EXPERIMENTS.items():
             all_imp["LSTM"] = plot_bar(sv2d, feat_cols,
                 f"SHAP — LSTM ({exp_info['label']})",
                 os.path.join(out_dir, "shap_lstm_bar.png"), "#E74C3C")
-        except Exception as e: print(f"   ⚠  LSTM error: {e}")
-    else: print("   ⚠  lstm_model.keras not found")
+        except Exception as e: print(f"LSTM error: {e}")
+    else: print("   lstm_model.keras not found")
 
     # ── All Models Comparison ─────────────────────────────────
     if len(all_imp) >= 2:
@@ -264,15 +264,15 @@ for exp_key, exp_info in EXPERIMENTS.items():
             plt.tight_layout()
             fig.savefig(os.path.join(out_dir, "shap_all_comparison.png"), dpi=120, bbox_inches="tight")
             plt.close(fig)
-            print("   ✅ shap_all_comparison.png")
+            print("  shap_all_comparison.png")
 
             imp_df.sort_values("avg", ascending=False).to_csv(
                 os.path.join(out_dir, "shap_feature_importance.csv"))
-            print("   ✅ shap_feature_importance.csv")
+            print(" shap_feature_importance.csv")
         except Exception as e:
-            print(f"   ⚠  Comparison: {e}")
+            print(f" Comparison: {e}")
 
-    print(f"\n  ✅ {exp_key} complete!")
+    print(f"\n {exp_key} complete!")
 
 print("\n" + "="*60)
 print("  ALL SHAP DONE!")

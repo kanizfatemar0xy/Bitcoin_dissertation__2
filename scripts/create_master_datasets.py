@@ -1,13 +1,13 @@
 """
 Script 1: create_master_datasets.py
 ====================================
-Ye script 3 master datasets banata hai:
+  script 3 master datasets:
   1. master_price_news.csv     (Experiment 1)
   2. master_price_tweets.csv   (Experiment 2)
   3. master_dataset.csv        (Experiment 3 - All 3)
 
-Run karo:  py create_master_datasets.py
-Output:    Bitcoin/data/ folder mein save hoga
+Run :  py create_master_datasets.py
+Output:    Bitcoin/data/ it will be saved in folder
 """
 
 import pandas as pd
@@ -23,7 +23,7 @@ NEWS_FILE   = os.path.join(BASE_DIR, "3_news_data.csv")
 # ─── Helper: Add Lag + Rolling Features ───────────────────────────────────────
 def add_features(df, sentiment_cols, lag_days=[1, 2, 3, 7]):
     """
-    Price lag features + Rolling features + Sentiment lag features add karta hai.
+    Price lag features + Rolling features + Sentiment lag features add.
     """
     # Price lag features
     for lag in lag_days:
@@ -100,7 +100,7 @@ exp1 = add_features(exp1, sentiment_cols_news)
 
 out1 = os.path.join(BASE_DIR, "master_price_news.csv")
 exp1.to_csv(out1, index=False)
-print(f"   ✅ Saved: master_price_news.csv")
+print(f"    Saved: master_price_news.csv")
 print(f"   Rows  : {len(exp1):,}")
 print(f"   Cols  : {len(exp1.columns)}")
 print(f"   Range : {exp1['Date'].min().date()} → {exp1['Date'].max().date()}")
@@ -120,7 +120,7 @@ exp2 = add_features(exp2, sentiment_cols_tweets)
 
 out2 = os.path.join(BASE_DIR, "master_price_tweets.csv")
 exp2.to_csv(out2, index=False)
-print(f"   ✅ Saved: master_price_tweets.csv")
+print(f"    Saved: master_price_tweets.csv")
 print(f"   Rows  : {len(exp2):,}")
 print(f"   Cols  : {len(exp2.columns)}")
 print(f"   Range : {exp2['Date'].min().date()} → {exp2['Date'].max().date()}")
@@ -140,7 +140,7 @@ exp3 = add_features(exp3, sentiment_cols_all)
 
 out3 = os.path.join(BASE_DIR, "master_dataset.csv")
 exp3.to_csv(out3, index=False)
-print(f"   ✅ Saved: master_dataset.csv")
+print(f"    Saved: master_dataset.csv")
 print(f"   Rows  : {len(exp3):,}")
 print(f"   Cols  : {len(exp3.columns)}")
 print(f"   Range : {exp3['Date'].min().date()} → {exp3['Date'].max().date()}")
@@ -153,5 +153,5 @@ print(f"  Exp 1 (Price+News)     : {len(exp1):>5,} rows | {len(exp1.columns)} co
 print(f"  Exp 2 (Price+Tweets)   : {len(exp2):>5,} rows | {len(exp2.columns)} cols")
 print(f"  Exp 3 (Price+T+N)      : {len(exp3):>5,} rows | {len(exp3.columns)} cols")
 print("=" * 55)
-print("\n  ✅ All 3 master datasets saved in Bitcoin/data/")
-print("  ▶  Next: py generate_all_plots.py\n")
+print("\n   All 3 master datasets saved in Bitcoin/data/")
+print(" Next: py generate_all_plots.py\n")

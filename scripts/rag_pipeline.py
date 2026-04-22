@@ -1,14 +1,14 @@
 """
 Script 5: rag_pipeline.py
 ===========================
-Teeno experiments ke high-volatility events ke liye
-RAG (Retrieval-Augmented Generation) narratives banata hai.
+For three experiment's high-volatility events it use
+RAG (Retrieval-Augmented Generation) narratives.
 
 Approach:
-  1. High volatility events detect karta hai (threshold > mean + 1.5*std)
-  2. Un dates ke aas paas ke news/tweet sentiment retrieve karta hai
-  3. TF-IDF similarity se most relevant context select karta hai
-  4. Claude-style narrative template se explanation generate karta hai
+  1.Detecting High volatility events (threshold > mean + 1.5*std)
+  2. Retrieving news/tweet sentiment 
+  3. It selects the most relevant context using TF-IDF similarity.
+  4. It generates the explanation using a Claude-style narrative template.
 
 Output:
   rag/
@@ -21,7 +21,7 @@ Output:
   ├── exp2/  (same)
   └── exp3/  (same)
 
-Run karo:  py rag_pipeline.py
+Run:  py rag_pipeline.py
 """
 
 import pandas as pd
@@ -112,14 +112,14 @@ KNOWN_EVENTS = {
 }
 
 def get_event_context(date):
-    """Date ke liye known event context dhundho."""
+    """Date for known event context dhundho."""
     key = date.strftime("%Y-%m")
     return KNOWN_EVENTS.get(key, "General market activity period")
 
 def sentiment_label(score):
-    if score > 0.1:  return "Positive 📈"
-    if score < -0.1: return "Negative 📉"
-    return "Neutral ➡️"
+    if score > 0.1:  return "Positive "
+    if score < -0.1: return "Negative "
+    return "Neutral "
 
 def volatility_level(vol, mean_vol, std_vol):
     if vol > mean_vol + 2*std_vol: return "EXTREME"
@@ -129,7 +129,7 @@ def volatility_level(vol, mean_vol, std_vol):
 
 # ─── RAG: Simple TF-IDF retrieval ─────────────────────────────────────────────
 def build_context_corpus(df, event_date, window=3, has_tweets=True, has_news=True):
-    """Event ke aas paas ke rows se context corpus banao."""
+    """Create a context corpus from the rows surrounding the event."""
     start = event_date - pd.Timedelta(days=window)
     end   = event_date + pd.Timedelta(days=window)
     mask  = (df["Date"] >= start) & (df["Date"] <= end)
@@ -152,7 +152,7 @@ def build_context_corpus(df, event_date, window=3, has_tweets=True, has_news=Tru
     return docs
 
 def rag_retrieve(query, corpus, top_k=3):
-    """TF-IDF se most relevant documents retrieve karo."""
+    """ From TF-IDF retrieves relevant documents."""
     if not corpus:
         return []
     all_docs = [query] + corpus
@@ -166,7 +166,7 @@ def rag_retrieve(query, corpus, top_k=3):
         return corpus[:top_k]
 
 def generate_narrative(event, exp_label, mean_vol, std_vol, has_tweets, has_news):
-    """Event ke liye structured narrative generate karo."""
+    """ For event it generates structured narrative ."""
     date      = event["date"]
     vol       = event["volatility"]
     price     = event["price"]
@@ -243,7 +243,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     print(f"{'─'*60}")
 
     if not os.path.exists(exp_info["file"]):
-        print(f"  ⚠  Skipped — file not found: {exp_info['file']}")
+        print(f"   Skipped — file not found: {exp_info['file']}")
         continue
 
     df = pd.read_csv(exp_info["file"], parse_dates=["Date"])
@@ -305,7 +305,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     txt_path = os.path.join(out_dir, "rag_narratives.txt")
     with open(txt_path, "w", encoding="utf-8") as f:
         f.write("\n".join(all_narratives))
-    print(f"   ✅ rag_narratives.txt")
+    print(f"   rag_narratives.txt")
 
     # ── Save JSON ─────────────────────────────────────────────
     json_data = []
@@ -326,7 +326,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     json_path = os.path.join(out_dir, "rag_narratives.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(json_data, f, indent=2)
-    print(f"   ✅ rag_narratives.json")
+    print(f"   rag_narratives.json")
 
     # ── Save CSV summary ──────────────────────────────────────
     summary_rows = []
@@ -345,7 +345,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
 
     csv_path = os.path.join(out_dir, "rag_summary_table.csv")
     pd.DataFrame(summary_rows).to_csv(csv_path, index=False)
-    print(f"   ✅ rag_summary_table.csv")
+    print(f" rag_summary_table.csv")
 
     # ── Plot 1: Volatility timeline ────────────────────────────
     print(f"\n  Generating plots...")
@@ -373,7 +373,7 @@ for exp_key, exp_info in EXPERIMENTS.items():
     plt.tight_layout()
     fig.savefig(os.path.join(out_dir, "rag_volatility_events.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print(f"   ✅ rag_volatility_events.png")
+    print(f" rag_volatility_events.png")
 
     # ── Plot 2: Top events bar chart ───────────────────────────
     top5 = events[:5]
@@ -400,9 +400,9 @@ for exp_key, exp_info in EXPERIMENTS.items():
     plt.tight_layout()
     fig.savefig(os.path.join(out_dir, "rag_event_analysis.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print(f"   ✅ rag_event_analysis.png")
+    print(f"  rag_event_analysis.png")
 
-    print(f"\n  ✅ {exp_key} RAG done!")
+    print(f"\n {exp_key} RAG done!")
 
 # ─── Final Summary ────────────────────────────────────────────────────────────
 print("\n" + "=" * 60)

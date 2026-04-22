@@ -1,10 +1,10 @@
 """
 Script 2: generate_all_plots.py — SMOOTH VERSION
 ==================================================
-Sab sentiment lines 7-day rolling average se smooth hain
-Price jaisi clean simple lines!
+All sentiment lines 7-day rolling average is smooth
+Price is clean simple lines
 
-Run karo:  py generate_all_plots.py
+Run:  py generate_all_plots.py
 """
 
 import pandas as pd
@@ -102,7 +102,7 @@ def save_fig(fig, folder, name):
     path = os.path.join(folder, name)
     fig.savefig(path, dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print(f"   ✅ {name}")
+    print(f"  {name}")
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  SECTION 1 — INDIVIDUAL PLOTS
@@ -182,7 +182,7 @@ print("\n[3/3] Experiment Plots (plots/experiments/)...")
 
 def plot_experiment(csv_path, exp_dir, sent_cols, sent_labels, sent_colors, exp_title):
     if not os.path.exists(csv_path):
-        print(f"   ⚠  Skipped (not found): {os.path.basename(csv_path)}")
+        print(f" Skipped (not found): {os.path.basename(csv_path)}")
         return
 
     df = pd.read_csv(csv_path, parse_dates=["Date"])
