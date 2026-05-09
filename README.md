@@ -242,11 +242,11 @@ Step 4 → Save as .txt, .json, .csv + visualisation plots
 
 | Date | Volatility Level | Market Context |
 |------|----------------|----------------|
-| 2022-05-xx | EXTREME | Terra/LUNA collapse — crypto market crash |
-| 2022-11-xx | EXTREME | FTX collapse — major crypto crisis |
-| 2021-05-xx | HIGH | China crypto mining ban |
-| 2022-03-xx | HIGH | Russia-Ukraine war — market uncertainty |
-| 2021-11-xx | HIGH | Bitcoin new ATH near $69K |
+| 2022-05 | EXTREME | Terra/LUNA collapse — crypto market crash |
+| 2022-11 | EXTREME | FTX collapse — major crypto crisis |
+| 2021-05 | HIGH | China crypto mining ban |
+| 2022-03 | HIGH | Russia-Ukraine war — market uncertainty |
+| 2021-11 | HIGH | Bitcoin new ATH near $69K |
 
 **Finding:** 5 of the top 10 high-volatility events aligned with **negative news sentiment**, supporting the hypothesis that negative sentiment amplifies volatility.
 
